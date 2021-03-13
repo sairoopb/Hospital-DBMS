@@ -9,7 +9,7 @@ CREATE TABLE `Patient` (
     `patient_id` int NOT NULL,
     `first_name` varchar(30),
     `last_name` varchar(30),
-    `contact_no` bigint,
+    `contact_no` varchar(15),
     `address` varchar(50),
     PRIMARY KEY (`patient_id`)
 );
@@ -31,9 +31,9 @@ CREATE TABLE `Doctor` (
     `doctor_id` int NOT NULL,
     `first_name` varchar(30),
     `last_name` varchar(30),
-    `contact_no` bigint,
+    `contact_no` varchar(15),
     `address` varchar(50),
-    `salary` int,
+    `salary` decimal(10, 2),
     `specialization` varchar(30),
     `role` varchar(30),
     `room_no`int NOT NULL,
@@ -49,7 +49,7 @@ CREATE TABLE `Medicine` (
     `inventory_quantity` int,
     `name` varchar(30),
     `price` int,
-    PRIMARY KEY (`Medicine_id`)
+    PRIMARY KEY (`medicine_id`)
 );
 
 -- 5. Nurse entity
@@ -59,9 +59,9 @@ CREATE TABLE `Nurse` (
     `nurse_id` int NOT NULL,
     `first_name` varchar(30),
     `last_name` varchar(30),
-    `contact_no` bigint,
+    `contact_no` varchar(15),
     `address` varchar(50),
-    `salary` int,
+    `salary` decimal(10, 2),
     PRIMARY KEY (`nurse_id`)
 );
 
@@ -85,10 +85,10 @@ CREATE TABLE `Employee` (
     `employee_id` int NOT NULL,
     `first_name` varchar(30),
     `last_name` varchar(30),
-    `contact_no` bigint,
+    `contact_no` varchar(15),
     `occupation` varchar(30),
     `address` varchar(50),
-    `salary` int,
+    `salary` decimal(10, 2),
     PRIMARY KEY (`employee_id`)
 );
 
@@ -116,7 +116,7 @@ CREATE TABLE `Treatment` (
     `treatment_id` int NOT NULL,
     `start_date` Date,
     `end_date` Date,
-    `details` varchar(100),
+    `details` varchar(255),
     PRIMARY KEY (`treatment_id`)
 );
 
@@ -126,7 +126,7 @@ DROP TABLE IF EXISTS `Test`;
 CREATE TABLE `Test` (
     `test_id` int NOT NULL,
     `name` varchar(50),
-    `cost` int,
+    `cost` decimal(10, 2),
     PRIMARY KEY (`test_id`)
 );
 
@@ -136,17 +136,17 @@ DROP TABLE IF EXISTS `Procedure`;
 CREATE TABLE `Procedure` (
     `procedure_id` int NOT NULL,
     `name` varchar(50),
-    `price` int,
+    `cost` decimal(10, 2),
     PRIMARY KEY (`procedure_id`)
 );
 
 -- 13. Patient Log Entity
 
 DROP TABLE IF EXISTS `Patient_Log`;
-CREATE TABLE `Patient_log` (
+CREATE TABLE `Patient_Log` (
     `patient_id` int NOT NULL,
-    `checkin` varchar(50),
-    `checkout` int,
+    `checkin` Datetime,
+    `checkout` Datetime,
     PRIMARY KEY (`patient_id`),
     FOREIGN KEY (`patient_id`) REFERENCES `Patient` ( `patient_id` ) ON DELETE CASCADE
 );
