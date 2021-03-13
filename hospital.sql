@@ -2,6 +2,8 @@ DROP DATABASE IF EXISTS hospital;
 CREATE DATABASE hospital;
 USE hospital;
 
+-- Entity Sets
+
 -- 1. Patient Entity
 
 DROP TABLE IF EXISTS `Patient`;
@@ -48,7 +50,7 @@ CREATE TABLE `Medicine` (
     `medicine_id` int NOT NULL,
     `inventory_quantity` int,
     `name` varchar(30),
-    `price` int,
+    `price` decimal(10, 2),
     PRIMARY KEY (`medicine_id`)
 );
 
@@ -71,9 +73,9 @@ DROP TABLE IF EXISTS `Bill`;
 CREATE TABLE `Bill` (
     `bill_number` int NOT NULL,
     `bill_type` int,
-    `total` int,
-    `subtotal` int,
-    `taxes` int,
+    `total` decimal(10, 2),
+    `subtotal` decimal(10, 2),
+    `taxes` decimal(10, 2),
     `paid` bit,
     PRIMARY KEY (`bill_number`)
 );
@@ -147,6 +149,17 @@ CREATE TABLE `Patient_Log` (
     `patient_id` int NOT NULL,
     `checkin` Datetime,
     `checkout` Datetime,
-    PRIMARY KEY (`patient_id`),
+    PRIMARY KEY (`patient_id`, `checkin`),
     FOREIGN KEY (`patient_id`) REFERENCES `Patient` ( `patient_id` ) ON DELETE CASCADE
+);
+
+-- Relationship Sets
+
+-- 1. Treated
+
+DROP TABLE IF EXISTS `Treated`;
+CREATE TABLE `Treated` (
+    `patient_id` int,
+    `treatment_id` int NOT NULL,
+    PRIMARY KEY (`treatment_id`)
 );
