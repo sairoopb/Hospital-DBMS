@@ -11,7 +11,7 @@ CREATE TABLE `Patient` (
     `patient_id` int NOT NULL,
     `first_name` varchar(30),
     `last_name` varchar(30),
-    `contact_no` varchar(15),
+    `contact_no` varchar(15) UNIQUE,
     `address` varchar(50),
     PRIMARY KEY (`patient_id`)
 );
@@ -30,10 +30,10 @@ CREATE TABLE `Room` (
 
 DROP TABLE IF EXISTS `Doctor`;
 CREATE TABLE `Doctor` (
-    `doctor_id` int NOT NULL,
+    `doctor_id` int NOT NULL AUTO_INCREMENT,
     `first_name` varchar(30),
     `last_name` varchar(30),
-    `contact_no` varchar(15),
+    `contact_no` varchar(15) UNIQUE,
     `address` varchar(50),
     `salary` decimal(10, 2),
     `specialization` varchar(30),
@@ -47,7 +47,7 @@ CREATE TABLE `Doctor` (
 
 DROP TABLE IF EXISTS `Medicine`;
 CREATE TABLE `Medicine` (
-    `medicine_id` int NOT NULL,
+    `medicine_id` int NOT NULL AUTO_INCREMENT,
     `inventory_quantity` int,
     `name` varchar(30),
     `price` decimal(10, 2),
@@ -58,11 +58,11 @@ CREATE TABLE `Medicine` (
 
 DROP TABLE IF EXISTS `Nurse`;
 CREATE TABLE `Nurse` (
-    `nurse_id` int NOT NULL,
+    `nurse_id` int NOT NULL AUTO_INCREMENT,
     `first_name` varchar(30),
     `last_name` varchar(30),
-    `contact_no` varchar(15),
-    `address` varchar(50),
+    `contact_no` varchar(15) UNIQUE,
+    `address` varchar(100),
     `salary` decimal(10, 2),
     PRIMARY KEY (`nurse_id`)
 );
@@ -84,10 +84,10 @@ CREATE TABLE `Bill` (
 
 DROP TABLE IF EXISTS `Employee`;
 CREATE TABLE `Employee` (
-    `employee_id` int NOT NULL,
+    `employee_id` int NOT NULL AUTO_INCREMENT,
     `first_name` varchar(30),
     `last_name` varchar(30),
-    `contact_no` varchar(15),
+    `contact_no` varchar(15) UNIQUE,
     `occupation` varchar(30),
     `address` varchar(50),
     `salary` decimal(10, 2),
@@ -126,7 +126,7 @@ CREATE TABLE `Treatment` (
 
 DROP TABLE IF EXISTS `Test`;
 CREATE TABLE `Test` (
-    `test_id` int NOT NULL,
+    `test_id` int NOT NULL AUTO_INCREMENT,
     `name` varchar(50),
     `cost` decimal(10, 2),
     PRIMARY KEY (`test_id`)
@@ -136,7 +136,7 @@ CREATE TABLE `Test` (
 
 DROP TABLE IF EXISTS `Procedure`;
 CREATE TABLE `Procedure` (
-    `procedure_id` int NOT NULL,
+    `procedure_id` int NOT NULL AUTO_INCREMENT,
     `name` varchar(50),
     `cost` decimal(10, 2),
     PRIMARY KEY (`procedure_id`)
