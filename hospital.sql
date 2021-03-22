@@ -12,7 +12,7 @@ CREATE TABLE `Patient` (
     `first_name` varchar(30),
     `last_name` varchar(30),
     `contact_no` varchar(15) UNIQUE,
-    `address` varchar(50),
+    `address` varchar(100),
     PRIMARY KEY (`patient_id`)
 );
 
@@ -76,7 +76,7 @@ CREATE TABLE `Bill` (
     `total` decimal(10, 2),
     `subtotal` decimal(10, 2),
     `taxes` decimal(10, 2),
-    `paid` bit,
+    `paid` int,
     PRIMARY KEY (`bill_number`)
 );
 
@@ -107,7 +107,7 @@ CREATE TABLE `Prescription` (
 DROP TABLE IF EXISTS `Diagnosis`;
 CREATE TABLE `Diagnosis` (
     `diagnosis_id` int NOT NULL,
-    `results` varchar(100),
+    `results` varchar(150),
     PRIMARY KEY (`diagnosis_id`)
 );
 
@@ -333,7 +333,7 @@ CREATE TABLE `Aftercare` (
     `treatment_id` int NOT NULL,
     `room_no` int NOT NULL,
     `start_date` Date NOT NULL,
-    `end_date` Date NOT NULL,
+    `end_date` Date,
     PRIMARY KEY (`treatment_id`,`room_no`, `start_date`),
     FOREIGN KEY (`treatment_id`) REFERENCES `Treatment` ( `treatment_id` ) ON DELETE CASCADE,
     FOREIGN KEY (`room_no`) REFERENCES `Room` ( `room_no` ) ON DELETE CASCADE

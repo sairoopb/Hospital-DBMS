@@ -56,3 +56,113 @@ INSERT INTO `Medicine` (`inventory_quantity`, `name`, `price`) VALUES
 (233, "Oxaliplatin", 4798.00),
 (124, "Methotrexate", 57.85),
 (112, "Busulfan", 415.00);
+
+INSERT INTO `Patient` VALUES
+(1, "Jyotish","Divan", "02223443172", "417 ,sai Chambers,  Narshi Natha St, Chinch Bunder"),
+(2, "Yasmine","Kumar","02224464461", "349 ,Allied Indl Estae Off Mmc, Off M.m.c Road, Mahim"),
+(3, "Supriya", "Shanker", "02224092768", "41 /, Sadar Nagar No , Sion");
+
+INSERT INTO `Patient_Log` (`patient_id`, `checkin`, `checkout`) VALUES
+(1, "2012-12-02 20:20:10", NULL),
+(2, "2020-08-05 14:56:24", "2020-08-05 18:34:32"),
+(3, "2015-12-02 08:20:10", "2015-12-02 11:20:10"),
+(3, "2015-12-05 10:20:10", "2015-12-06 11:20:10");
+
+INSERT INTO `Appointment` (`doctor_id`, `patient_id`, `date`, `start_time`) VALUES
+(3, 3, "2015-12-02", "08:35:00"),
+(2, 2, "2020-08-05", "13:05:13");
+
+INSERT INTO `Diagnosis` (`diagnosis_id`, `results`) VALUES
+(3, "Type 2 diabetes"),
+(2, "Scans Normal. No treatment required. Patient advised to take prescribed medicines");
+
+INSERT INTO `Treatment` (`treatment_id`, `start_date`, `end_date`, `details`) VALUES
+(1, "2012-12-02", "2012-12-03", "Success with slight knee complication"),
+(2, "2015-12-05", "2015-12-06", "Sugar levels reduced");
+
+INSERT INTO `Bill` VALUES
+(1, 2,762000.00,700000,62000, 0),
+(2, 1, 1000.5, 969.5,31, 1),
+(3, 0, 6300, 6000, 300, 1),
+(5, 0, 8000.00, 7500.00, 500.00, 1),
+(6, 1, 952.95, 832.85, 120.10, 1),
+(4, 3, 855000, 850500, 4500, 1);
+
+INSERT INTO `Prescription` VALUES
+(1),
+(5);
+
+INSERT INTO `Implies` (`diagnosis_id`, `treatment_id`) VALUES
+(3, 2);
+
+INSERT INTO `Recommends` (`doctor_id`, `diagnosis_id`) VALUES
+(3, 3),
+(2, 2);
+
+INSERT INTO `Done_In` VALUES
+(1, 1),
+(2, 1);
+
+INSERT INTO `Treated` VALUES
+(1, 1),
+(3, 2);
+
+INSERT INTO `Performs` VALUES
+(1, 1),
+(4, 2),
+(5, 2);
+
+INSERT INTO `Consists` VALUES
+(1, 1),
+(2, 1),
+(4, 1),
+(4, 2),
+(1, 2);
+
+INSERT INTO `Treatment_Bill` VALUES
+(1, 1),
+(4, 2);
+
+INSERT INTO `Pays` VALUES
+(1, 1),
+(3, 3),
+(2, 5),
+(2, 6);
+
+INSERT INTO `Aftercare` VALUES
+(1, 2, "2012-12-03", NULL);
+
+
+INSERT INTO `Serves` VALUES
+(1, 1);
+
+INSERT INTO `Treatment_Presc` VALUES
+(1, 1);
+
+INSERT INTO `Includes` VALUES
+(1, 1),
+(2, 1),
+(4, 1),
+(2, 5),
+(4, 5),
+(5, 5);
+
+INSERT INTO `Medical_Bill` VALUES
+(1, 2),
+(5, 6);
+
+INSERT INTO `Involves` VALUES
+(2, 2, ""),
+(2, 3, ""),
+(3, 5, "Positive");
+
+INSERT INTO `Undergoes` VALUES
+(3, 3),
+(2, 2);
+
+INSERT INTO `Bill_Diag` VALUES
+(3, 3),
+(5, 2);
+
+INSERT INTO `Diag_Presc` VALUES
+(5, 2);
