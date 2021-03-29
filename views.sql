@@ -91,6 +91,6 @@ Consists ON Consists.treatment_id = Treatment_Bill.treatment_id LEFT JOIN
 
 -- 7.
 CREATE VIEW Prescription_Report AS
-SELECT Includes.prescription_id, Medicine.name 
+SELECT Includes.prescription_id, Includes.unit, Medicine.name 
 FROM Includes LEFT JOIN 
 Medicine ON Includes.medicine_id = Medicine.medicine_id;
