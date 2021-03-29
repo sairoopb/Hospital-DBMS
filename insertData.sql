@@ -141,7 +141,7 @@ INSERT INTO `Serves` VALUES
 INSERT INTO `Treatment_Presc` VALUES
 (1, 1);
 
-INSERT INTO `Includes` VALUES
+INSERT INTO `Includes` (`medicine_id`, `prescription_id`) VALUES
 (1, 1),
 (2, 1),
 (4, 1),

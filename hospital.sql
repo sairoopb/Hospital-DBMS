@@ -263,6 +263,7 @@ DROP TABLE IF EXISTS `Includes`;
 CREATE TABLE `Includes` (
    `medicine_id` int NOT NULL,
    `prescription_id` int NOT NULL,
+   `unit` int DEFAULT 1,
    PRIMARY KEY (`medicine_id`,`prescription_id`),
    FOREIGN KEY (`medicine_id`) REFERENCES `Medicine` ( `medicine_id` ) ON DELETE CASCADE,
    FOREIGN KEY (`prescription_id`) REFERENCES `Prescription` ( `prescription_id` ) ON DELETE CASCADE
