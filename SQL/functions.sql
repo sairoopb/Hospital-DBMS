@@ -263,7 +263,7 @@ END IF;
 INSERT INTO Treatment
 VALUES (new_treat_id, st_date, en_date, treatment_details);
 
-IF EXISTS(SELECT * from Patient WHERE patient_id=pat_id) THEN
+IF EXISTS(SELECT * FROM Patient WHERE patient_id=pat_id) THEN
 INSERT INTO Treated
 VALUES (pat_id, new_treat_id);
 ELSE
@@ -271,7 +271,7 @@ CALL non_existent_procedure;
 LEAVE proclabel;
 END IF;
 
-IF EXISTS(SELECT * from Room WHERE room_no=room) THEN
+IF EXISTS(SELECT * FROM Room WHERE room_no=room) THEN
 INSERT INTO Done_In
 VALUES (new_treat_id, room);
 ELSE
@@ -279,8 +279,8 @@ CALL non_existent_procedure;
 LEAVE proclabel;
 END IF;
 
-IF diag_id >= 0 THEN
-IF EXISTS(SELECT * from Diagnosis WHERE diagnosis_id=diag_id) THEN
+IF diag_id > 0 THEN
+IF EXISTS(SELECT * FROM Diagnosis WHERE diagnosis_id=diag_id) THEN
 INSERT INTO `Implies`
 VALUES (diag_id, new_treat_id);
 ELSE
@@ -346,7 +346,8 @@ VALUES (new_bill_id, new_treat_id);
 INSERT INTO Pays
 VALUES (pat_id, new_bill_id);
 
-IF EXISTS(SELECT * from Room WHERE room_no=aftercare_room) THEN
+IF aftercare_room > 0 THEN
+IF EXISTS(SELECT * FROM Room WHERE room_no=aftercare_room) THEN
 INSERT INTO Aftercare (treatment_id, room_no, start_date)
 VALUES (new_treat_id, aftercare_room, en_date);
 ELSE
@@ -354,8 +355,15 @@ CALL non_existent_procedure;
 LEAVE proclabel;
 END IF;
 
+IF EXISTS (SELECT * FROM Nurse WHERE nurse_id=aftercare_nurse) THEN
 INSERT INTO Serves
 VALUES(new_treat_id, aftercare_nurse);
+ELSE
+CALL non_existent_procedure;
+LEAVE proclabel;
+END IF;
+
+END IF;
 
 COMMIT;
 SET autocommit = 0;
