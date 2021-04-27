@@ -1,0 +1,34 @@
+{% extends "dbms_app/layout.html" %}
+
+{% block title %}
+  Patient Registration
+{% endblock %}
+
+{%block navlist %}
+
+{% endblock%}
+
+{% block body %}
+  {% if not sections %}
+      Some Error occured, Check your internet connection!
+  {% endif %}
+
+  <div class="row mt-3">
+        {% for section in sections %}
+        <div class="col-lg-3 d-flex mb-3">
+            <div class="card" >
+                <img class="card-img-top " src= "{{ section.image }}"  style="height: 300px;">
+                <div class="card-body">
+                    <h5 class="card-title">{{ section.section_name }}</h5>
+                    <p class="card-text"> {{ section.details }}</p>
+                </div>
+                <div class="card-body" >
+                    <a href="{{section.section_name}}/index" class="btn btn-sm btn-outline-success">Visit</a>
+                </div>
+            </div>
+
+        </div>
+        {% endfor %}
+    </div>
+
+{% endblock %}
