@@ -61,21 +61,6 @@ BEGIN
 END#
 DELIMITER ;
 
---all appointments
-
-DELIMITER #
-CREATE OR REPLACE PROCEDURE appointment_menu(IN first_name varchar(30), 
-                                            IN last_name varchar(30), 
-                                            IN specialization varchar(30))
-BEGIN
-    SELECT D.doctor_id, CONCAT(D.first_name, " ", D.last_name), D.specialization, A.date, A.start_time FROM 
-    (Doctor AS D) JOIN (Appointment AS A) ON D.doctor_id = A.doctor_id 
-    WHERE STRCMP(first_name, D.first_name) = 0 AND STRCMP(last_name, D.last_name) = 0
-    AND STRCMP(specialization, D.specialization) = 0 ORDER BY D.first_name ASC, D.last_name ASC;
-END#
-DELIMITER ;
-
-
 --create diagnosis
 
 -- Test create_diagnosis: CALL create_diagnosis(1, 1, "1|2|3", "Breh | Oke boi | yeet", "he supa dead chief", @out_value);
