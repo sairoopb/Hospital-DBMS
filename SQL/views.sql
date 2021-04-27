@@ -66,9 +66,9 @@ Treatment ON T.treatment_id = Treatment.treatment_id;
 
 -- 6.
 CREATE OR REPLACE VIEW Bill_Report AS
-SELECT Bill.*, Test.name as `Tests`, Test.cost as `Test Cost`,`Procedure`.name as `Procedures`, `Procedure`.cost as `Procedure Cost`,
-Medicine.name as `drug`, Includes.unit as `Medicine Qt`, Medicine.price as `Medicine Unit Cost`, 
-Patient.patient_id, CONCAT(Patient.first_name, " ", Patient.last_name) as `Patient Name` 
+SELECT Bill.*, Test.name as `Tests`, Test.cost as `Test_Cost`,`Procedure`.name as `Procedures`, `Procedure`.cost as `Procedure_Cost`,
+Medicine.name as `drug`, Includes.unit as `Medicine_Qt`, Medicine.price as `Medicine_Unit_Cost`, 
+Patient.patient_id, CONCAT(Patient.first_name, " ", Patient.last_name) as `Patient_Name` 
 FROM Bill LEFT JOIN
 Pays ON Pays.bill_number = Bill.bill_number LEFT JOIN
 Patient ON Patient.patient_id = Pays.patient_id LEFT JOIN

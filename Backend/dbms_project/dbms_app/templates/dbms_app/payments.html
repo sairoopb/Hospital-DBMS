@@ -1,0 +1,61 @@
+{% extends "dbms_app/layout.html" %}
+
+{% block title %}Bill Desk{% endblock %}
+
+{% block body %}
+{% if errorFlag %}
+There has been an Error in the bill processing i.e wrong bill number
+{% endif %}
+
+<form style="padding:42px 20px" action="payments">
+    <label for="patient_id"> Patient ID : </label>
+    <input type="text" id="patient_id" name="patient_id"><br><br>
+    <input type="submit" value="Submit">
+</form>
+
+{% if not data %}
+Enter the patient ID or click submit
+{% endif %}
+
+<div class="mt-3">
+    <table class="table table-responsive table-sm table-hover table-fixed">
+        <thead class="table-secondary">
+
+            <tr>
+                {% for header in headers %}
+                <th> {{header}}</th>
+                {% endfor %}
+            </tr>
+
+        </thead>
+        <tbody>
+            {% for value in data %}
+            <tr style="cursor:pointer;">
+                <td>{{ value.bill_number }}</td>
+                <td>{{ value.bill_type }}</td>
+                <td>{{ value.total }}</td>
+                <td>{{ value.subtotal }}</td>
+                <td>{{ value.taxes }}</td>
+                <td>{{ value.paid }}</td>
+                <td>{{ value.Tests }}</td>
+                <td>{{ value.Test_Cost }}</td>
+                <td>{{ value.Procedures }}</td>
+                <td>{{ value.Procedure_Cost }}</td>
+                <td>{{ value.drug }}</td>
+                <td>{{ value.Medicine_Qt }}</td>
+                <td>{{ value.Medicine_Unit_Cost }}</td>
+                <td>{{ value.patient_id }}</td>
+                <td>{{ value.Patient_Name }}</td>
+                {% endfor %}
+        </tbody>
+
+    </table>
+</div>
+
+
+<form style="padding:42px 20px" action="payments">
+    <label for="bill_number"> Bill Number : </label>
+    <input type="text" id="bill_number" name="bill_number"><br><br>
+    <input type="submit" value="Pay">
+</form>
+{% endblock %}
