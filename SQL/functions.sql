@@ -571,3 +571,24 @@ END IF;
 
 END //
 DELIMITER ;
+
+--discharge patient: CALL discharge_patient(1, 2021-05-02, @out_value);
+DELIMITER //
+CREATE OR REPLACE PROCEDURE discharge_patient(
+IN pat_id INT,
+IN en_date DATE,
+OUT success_state INT
+)
+BEGIN
+DECLARE temp_treat_id INT DEFAULT 0;
+
+IF EXISTS(SELECT * FROM Aftercare JOIN Treatment_Raw USING(treatment_id) WHERE aftercare_end IS NULL && patient_id = pat_id) THEN
+SELECT DISTINCT Aftercare.treatment_id INTO temp_treat_id FROM Aftercare JOIN Treatment_Raw USING(treatment_id) WHERE aftercare_end IS NULL && patient_id = pat_id;
+UPDATE Aftercare SET end_date = en_date WHERE treatment_id = temp_treat_id;
+SET success_state = 0;
+ELSE
+set success_state = -1;
+END IF;
+END
+//
+DELIMITER ;
