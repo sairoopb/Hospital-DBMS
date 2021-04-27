@@ -87,3 +87,7 @@ CREATE OR REPLACE VIEW Prescription_Report AS
 SELECT Includes.prescription_id, Includes.unit, Medicine.name 
 FROM Includes LEFT JOIN 
 Medicine ON Includes.medicine_id = Medicine.medicine_id;
+
+CREATE OR REPLACE VIEW appointment_menu AS
+SELECT D.doctor_id, CONCAT(D.first_name, " ", D.last_name), D.specialization, A.date, A.start_time FROM 
+(Doctor AS D) JOIN (Appointment AS A) ON D.doctor_id = A.doctor_id ORDER BY D.first_name ASC, D.last_name ASC
