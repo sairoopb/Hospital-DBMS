@@ -52,7 +52,7 @@ CREATE OR REPLACE PROCEDURE new_registration(IN  f_name varchar(30),
 BEGIN
 DECLARE t int;
 SET new_id = (SELECT COUNT(*) FROM Patient) + 1;
-CALL patient_exists(null,contact_number,t);
+CALL patient_exists(null,contact_number,t,@temp);
 IF t > 0 THEN
     SELECT "Already Registered";
 ELSE
