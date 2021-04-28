@@ -10,6 +10,9 @@
           <li class="nav-item">
             <a class="nav-link" aria-current="page" href="index">Record New Treatment</a>
           </li>
+	  <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="discharge">Discharge Patients</a>
+          </li>
   </ul>
 
 {% endblock %}
@@ -58,9 +61,9 @@
   <h4>Medicines</h4>
   <strong>Prescription ID: </strong> {{presc_id}} <br/><br/>
 
-  {% for medname, medid in meds %}
+  {% for medname, medunit in meds %}
   <strong>Medicine Name: </strong> {{medname}} <br/>
-  <strong>Units:</strong> {{medid}} <br/>
+  <strong>Units:</strong> {{medunit}} <br/>
   {% endfor %}
   <br/>
 
