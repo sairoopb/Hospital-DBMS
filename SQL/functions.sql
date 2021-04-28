@@ -1,18 +1,27 @@
 -- Create an appointment by the consultant 
 DELIMITER # 
 CREATE OR REPLACE PROCEDURE create_appointment
-(IN doctor int, IN patient_id int, IN start_datetime datetime, OUT created int)
+(IN doc_id int, IN pat_id int, IN start_datetime datetime, OUT created int)
 BEGIN
 IF (SELECT start_time FROM Appointment 
     WHERE `date` = DATE(start_datetime) AND 
-    doctor_id = doctor AND start_time 
+    doctor_id = doc_id AND start_time 
     BETWEEN (SELECT subtime(TIME(start_datetime),'00:29:59'))
     AND (SELECT subtime(TIME(start_datetime),'-00:29:59')))
     THEN SET created = 0;
 ELSE
+IF EXISTS(SELECT * FROM Doctor WHERE doctor_id = doc_id) THEN
+IF EXISTS(SELECT * FROM Patient WHERE patient_id = pat_id) THEN
     INSERT INTO Appointment VALUES
     (doctor, patient_id, DATE(start_datetime), TIME(start_datetime));
     SET created = 1;
+ELSE
+SET created = -1;
+END IF;
+ELSE
+SET created = -1;
+END IF;
+
 END IF;
 END#
 DELIMITER ;
@@ -478,8 +487,13 @@ SET med_id = SUBSTRING_INDEX(meds, '|', 1);
 SET unit_val = SUBSTRING_INDEX(units, '|', 1);
 
 IF EXISTS(SELECT * FROM Medicine WHERE medicine_id = med_id) THEN
+IF unit_val = '' THEN
+INSERT INTO Includes (medicine_id, prescription_id)
+VALUES (med_id, new_presc_id);
+ELSE
 INSERT INTO Includes VALUES
 (med_id, new_presc_id, unit_val);
+END IF;
 ELSE
 CALL non_existent_procedure;
 LEAVE proclabel;
