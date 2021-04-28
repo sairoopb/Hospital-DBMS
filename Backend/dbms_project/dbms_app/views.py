@@ -23,7 +23,7 @@ def payments_view(request,branch):
 
 
 def pharmacy_view(request,branch):
-    return pharma.pharma_bill_view(request,branch)
+    return pharma_bill.pharma_bill_view(request,branch)
 
 
 def treatment_view(request,branch):

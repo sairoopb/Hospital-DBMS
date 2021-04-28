@@ -54,7 +54,7 @@
     <input type="number" name="aftercare_nurse" min="1" step="1"><br/>
 
     <br/>
-    <input type="submit" value="Submit"><br/>
+    <input type="submit" value="Submit" class="btn btn-primary"><br/>
     
   </form>
 
@@ -68,7 +68,7 @@
       <form action="retrieve" method="POST">
 	{% csrf_token %}
 	<input type="hidden" name="treat_id" value={{treat_id}}>
-	<input type="submit" value="View Report"/>
+	<input type="submit" value="View Report" class="btn btn-primary">
       </form>
   {% endfor %}
 
