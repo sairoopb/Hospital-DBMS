@@ -426,8 +426,13 @@ VALUES (new_presc_id);
 
 IF presc_type = 0 THEN
 IF EXISTS(SELECT * FROM Diagnosis WHERE diagnosis_id = entity_id) THEN
+IF EXISTS(SELECT * FROM Diag_Presc WHERE diagnosis_id = entity_id) THEN
+CALL non_existent_procedure;
+LEAVE proclabel;
+ELSE
 INSERT INTO Diag_Presc VALUES
 (new_presc_id, entity_id);
+END IF;
 ELSE
 CALL non_existent_procedure;
 LEAVE proclabel;
@@ -435,8 +440,13 @@ END IF;
 
 ELSE
 IF EXISTS(SELECT * FROM Treatment WHERE treatment_id = entity_id) THEN
+IF EXISTS(SELECT * FROM Treatment_Presc WHERE treatment_id = entity_id) THEN
+CALL non_existent_procedure;
+LEAVE proclabel;
+ELSE
 INSERT INTO Treatment_Presc VALUES
 (entity_id, new_presc_id);
+END IF;
 ELSE
 CALL non_existent_procedure;
 LEAVE proclabel;
