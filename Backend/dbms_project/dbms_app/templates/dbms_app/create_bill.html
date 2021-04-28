@@ -1,0 +1,90 @@
+{% extends "dbms_app/layout.html" %}
+
+{% block title %}
+Create prescription
+{% endblock %}
+
+{% block navlist %}
+
+<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+    <li class="nav-item">
+        <a class="nav-link" aria-current="page" href="{% url 'pharmacy' 'create' %}">Create Bill</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'pharmacy' 'show' %}">Show Bill</a>
+    </li>
+</ul>
+
+{% endblock %}
+
+
+{% block body %}
+
+<form method="POST">
+    {% csrf_token %}
+    <br>
+    <br>
+    <form method="POST">
+        {% csrf_token %}
+        Prescription ID: <input type="number" name="presc_id" required>
+        <input type="submit" value="Search">
+    </form>
+    <br>
+
+    {% if result %}
+        {{ result }}
+    {% endif %}
+    <br>
+
+    {% if presc_id %}
+
+    <b> Prescription ID: </b> {{ presc_id }}
+    <br>
+
+    <div class="mt-3">
+        <table class="table table-responsive table-sm table-hover table-fixed">
+            <thead class="table-secondary">
+
+                <tr>
+                    {% for header in headers %}
+                    <th> {{header}}</th>
+                    {% endfor %}
+                </tr>
+
+            </thead>
+            <tbody>
+                {% for quantity, medicine in rows %}
+                <tr style="cursor:pointer;">
+                    <td>{{ quantity }}</td>
+                    <td>{{ medicine }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+
+        </table>
+    </div>
+
+        {% if not flag %}
+        <form action="create" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="presc_id_bill" value={{ presc_id }}>
+            <input type="submit" value="Generate Bill">
+        </form>
+        {% else %}
+            {{ bill_result }}
+
+            {% if bill_id and bill_id != -1 %}
+                <br>
+                <form action="show" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="bill_id_create" value={{ bill_id }}>
+                    <input type="submit" value="Show Bill">
+                </form>
+            {% endif %}
+
+        {% endif %}
+
+    {% endif %}
+
+
+{% endblock %}
