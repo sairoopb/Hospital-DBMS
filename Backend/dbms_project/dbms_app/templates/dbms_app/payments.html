@@ -7,8 +7,12 @@
 There has been an Error in the bill processing i.e wrong bill number
 {% endif %}
 
+{% if createFlag %}
+Bill is succesfully paid.
+{% endif %}
+
 <form style="padding:42px 20px" action="payments">
-    <label for="patient_id"> Patient ID : </label>
+    <label for="patient_id"> Patient ID </label><br>
     <input type="text" id="patient_id" name="patient_id"><br><br>
     <input type="submit" value="Submit">
 </form>
@@ -54,8 +58,8 @@ Enter the patient ID or click submit
 
 
 <form style="padding:42px 20px" action="payments">
-    <label for="bill_number"> Bill Number : </label>
-    <input type="text" id="bill_number" name="bill_number"><br><br>
+    <label for="bill_number"> Bill Number </label><br>
+    <input type="text" id="bill_number" name="bill_number" required><br><br>
     <input type="submit" value="Pay">
 </form>
 {% endblock %}

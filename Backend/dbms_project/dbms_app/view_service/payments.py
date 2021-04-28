@@ -23,11 +23,12 @@ def payments_view(request,branch):
                 return render(request,"dbms_app/payments.html", {"headers": columns, "data":dictfetchall(cursor)})
             else:
                 cursor.callproc("mark_bill_paid", [request.GET['bill_number'], 0])
-                cursor.execute("SELECT @mark_bill_paid_0")
-                if (cursor.fetchone()):
+                cursor.execute("SELECT @_mark_bill_paid_1")
+                if (cursor.fetchone()[0] == 0):
                     cursor.execute("SELECT * FROM Bill_Report ORDER BY bill_number asc")
                     columns = [col[0] for col in cursor.description]
-                    return render(request,"dbms_app/payments.html", {"headers": columns, "data":dictfetchall(cursor), "errorFlag" : True})
+                    return render(request,"dbms_app/payments.html", {"headers": columns, "data":dictfetchall(cursor), "createFlag" : True})
                 cursor.execute("SELECT * FROM Bill_Report ORDER BY bill_number asc")
                 columns = [col[0] for col in cursor.description]
-                return render(request,"dbms_app/payments.html", {"headers": columns, "data":dictfetchall(cursor)})
+                return render(request,"dbms_app/payments.html", {"headers": columns, "data":dictfetchall(cursor), "errorFlag" : True})
+                

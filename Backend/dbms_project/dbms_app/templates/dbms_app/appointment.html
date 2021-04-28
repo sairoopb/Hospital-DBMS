@@ -1,0 +1,67 @@
+{% extends "dbms_app/layout.html" %}
+
+{% block title %}Consultant Desk{% endblock %}
+
+{% block body %}
+
+{% if errorFlag %}
+There is a date/time clash please choose another time.
+{% endif %}
+
+{% if createFlag %}
+Appointment is succesfully created.
+{% endif %}
+
+<form style="padding:42px 20px" action="appointment_view">
+    <label for="doctor_id"> Doctor ID </label><br>
+    <input type="text" id="doctor_id" name="doctor_id"><br>
+    <label for="name"> Doctor Name </label><br>
+    <input type="text" id="name" name="name"><br>
+    <label for="Specialization"> Specialization </label><br>
+    <input type="text" id="specialization" name="specialization"><br><br>
+    <input type="submit" value="Check">
+</form>
+
+{% if not data %}
+Enter the doctor ID or click submit
+{% endif %}
+
+<div class="mt-3">
+    <table class="table table-responsive table-sm table-hover table-fixed">
+        <thead class="table-secondary">
+
+            <tr>
+                {% for header in headers %}
+                <th> {{header}}</th>
+                {% endfor %}
+            </tr>
+
+        </thead>
+        <tbody>
+            {% for value in data %}
+            <tr style="cursor:pointer;">
+                <td>{{ value.doctor_id }}</td>
+                <td>{{ value.first_name }}</td>
+                <td>{{ value.last_name }}</td>
+                <td>{{ value.role }}</td>
+                <td>{{ value.specialization }}</td>
+                <td>{{ value.date }}</td>
+                <td>{{ value.start_time }}</td>
+                <td>{{ value.room_no }}</td>
+                {% endfor %}
+        </tbody>
+
+    </table>
+</div>
+
+
+<form style="padding:42px 20px" action="appointment_view">
+    <label for="d_id"> Doctor ID </label><br>
+    <input type="text" id="d_id" name="d_id" required><br>
+    <label for="patient_id"> Patient ID </label><br>
+    <input type="text" id="patient_id" name="patient_id" required><br>
+    <label for="bookDate">Appointment Date and Time</label><br>
+    <input type="datetime-local" id="bookDate" name="bookDate" required><br><br>
+    <input type="submit" value="Book">
+</form>
+{% endblock %}
