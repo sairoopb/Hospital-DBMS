@@ -26,14 +26,19 @@
     <br>
     <table>
         <tr>        
-            <td>Prescription ID:</td> 
+            <td>Prescription Type:</td> 
+            <td><input type="radio" id="p_type" name="gender" value="0">
+                <label for="p_type">Diagnosis</label><br>
+                <input type="radio" id="p_type" name="gender" value="1">
+                <label for="p_type">Treatment</label><br>
+            </td>
+        </tr>
+
+        <tr>        
+            <td> ID:</td> 
             <td> <input type = "number" name = "id" required> </td>
         </tr>
         
-        <tr>        
-            <td>Prescription Type:</td> 
-            <td><input type = "number" name="p_type" required></td>
-        </tr>
 
         <tr>        
             <td>Medicine(s):</td> 
