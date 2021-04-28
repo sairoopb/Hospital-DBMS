@@ -163,7 +163,7 @@ def treatment_view(request,branch):
                                   })
 
             else:
-                return render(request, "dbms_app/retrieve_treatment.html",
+                return render(request, "dbms_app/discharge_patient.html",
                                   {
                                       "message": []
                                   })
