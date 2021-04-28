@@ -1,3 +1,12 @@
-query.sql
-temp.sql
-functionHeader.sql
+SQL/query.sql
+SQL/temp.sql
+SQL/functionHeader.sql
+backup.sql
+Backend/dbms_project/__pycache__/*
+Backend/dbms_project/dbms_project/__pycache__/*
+Backend/dbms_project/dbms_app/view_service/__pycache__/*
+Backend/dbms_project/dbms_app/__pycache__/*
+Backend/dbms_project/dbms_app/migrations/__pycache__/*
+hospital
+Backend/dbms_project/dbms_app/models.py
+Backend/dbms_project/dbms_app/migrations/*

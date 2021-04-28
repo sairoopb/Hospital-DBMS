@@ -1,0 +1,90 @@
+{% extends "dbms_app/layout.html" %}
+
+{% block title %}
+  Treatment Report
+{% endblock %}
+
+{% block navlist %}
+
+  <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="index">Record New Treatment</a>
+          </li>
+	  <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="discharge">Discharge Patients</a>
+          </li>
+  </ul>
+
+{% endblock %}
+  
+{% block body %}
+  
+  <form method="POST">
+    {% csrf_token %}
+    
+    Treatment ID:<br/>
+    <input type="number" name="treat_id" min="1" step="1" required><br/>
+
+    <input type="submit" value="Submit"><br/>
+    
+  </form>
+
+  <br/><br/>
+  
+{% for report in reports %}
+
+  <h1>Treatment Report</h1><br/>
+  <strong>Treatment ID: </strong> {{tr_id}} <br/>
+  <br/>
+  <h4>Room</h4>
+  <strong>Room No: </strong> {{tr_room}}<br/>
+  <br/>
+  <h4>Patient:</h4>
+  <strong>Patient Name: </strong> {{pat_name}} <br/>
+  <strong>Patient ID: </strong> {{pat_id}} <br/>
+  <br/>
+  <h4>Doctors</h4>
+  {% for docid, docname in docs %}
+  <strong>Doctor Name: </strong> {{docname}} <br/>
+  <strong>Doctor ID: </strong> {{docid}} <br/>
+  <br/>
+  {% endfor %}
+  <h4>Procedures</h4>
+  {% for procid, procname in procs %}
+  <strong>Procedure: </strong> {{procname}} <br/>
+  <strong>Procedure ID: </strong> {{procid}} <br/>
+  {% endfor %}
+  <br/>
+  <h4>Related Diagnosis</h4>
+  <strong>Diagnosis ID: </strong> {{diag_id}} <br/>
+  <br/>
+  <h4>Medicines</h4>
+  <strong>Prescription ID: </strong> {{presc_id}} <br/><br/>
+
+  {% for medname, medunit in meds %}
+  <strong>Medicine Name: </strong> {{medname}} <br/>
+  <strong>Units:</strong> {{medunit}} <br/>
+  {% endfor %}
+  <br/>
+
+  <h4>Treatment Duration</h4>
+  <strong>Start Date</strong><br/>
+  {{st_date}} <br/>
+  <strong>End Date</strong><br/>
+  {{en_date}} <br/><br/>
+
+  <h4>Aftercare</h4>
+  <strong>Room Number: </strong> {{aft_room}}<br/>
+  <strong>Admitted On: </strong> {{aft_stdate}}<br/>
+  <strong>Discharged On: </strong> {{aft_endate}}<br/>
+  <br/>
+  <br/>
+{% endfor %}
+
+{% for error in errors %}
+  <p>{{error}}</p>
+{% endfor %}
+
+
+  
+{% endblock %}

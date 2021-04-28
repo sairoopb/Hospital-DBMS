@@ -1,0 +1,36 @@
+{% extends "dbms_app/layout.html" %}
+
+{% block title %}
+  Record New Treatment
+{% endblock %}
+
+{% block navlist %}
+
+  <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="index">Record New Treatment</a>
+          </li>
+
+	  <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="retrieve">Retrieve Treatment Reports</a>
+          </li>
+  </ul>
+
+{% endblock%}
+
+{% block body %}
+  <form method="POST">
+    {% csrf_token %}
+    
+    Patient ID:<br/>
+    <input type="number" name="pat_id" min="1" step="1" required><br/>
+
+    <input type="submit" value="Submit"><br/>
+
+  </form>
+
+{% for msg in message %}
+  <p> {{msg}} </p>
+{% endfor %}
+  
+{% endblock %}

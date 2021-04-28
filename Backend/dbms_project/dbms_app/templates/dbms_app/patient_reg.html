@@ -1,0 +1,57 @@
+{% extends "dbms_app/layout.html" %}
+
+{% block title %}
+  Patient Registration
+{% endblock %}
+
+{%block navlist %}
+
+<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" aria-current="page" href="{% url 'patients_reg' 'index'%}">Register Patient</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'patients_reg' 'find_patient'%}">Find Patient</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'patients_reg' 'patient_log'%}">Log Patient</a>
+        </li>
+</ul>
+
+{% endblock%}
+
+{% block body %}
+  {{message}}
+  <form class="mt-3" method="POST" action="{% url 'patients_reg' 'index'%}">
+    {% csrf_token %}
+    <div class="mb-3">
+      <label for="fname" class="form-label">First Name</label>
+      <input type="text" class="form-control" id ="fname" name = "first_name">
+    </div>
+    <div class="mb-3">
+      <label for="lname" class="form-label">Last Name</label>
+      <input type="text" class="form-control" id='lname' name = "last_name">
+    </div>
+    <div class="mb-3">
+      <label for="cnum" class="form-label">Contact Number</label>
+      <input type="text" class="form-control" id="cnum" name = "contact_no">
+    </div>
+    <div class="mb-3">
+      <label for="addr" class="form-label">Address</label>
+      <input type="text" class="form-control" id="addr" name = "address">
+    </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+
+  <p> {{result}} </p>
+
+  {% for pat_id in pat_ids %}
+      <form action="find_patient" method="POST">
+  {% csrf_token %}
+  <input type="hidden" name="patient_id" value={{pat_id}}>
+  <input type="hidden" name="contact_no" value="">
+  <button type="submit" class="btn btn-primary">More Details</button>
+      </form>
+  {% endfor %}
+
+{% endblock %}

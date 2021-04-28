@@ -513,13 +513,6 @@ BEGIN
 END#
 DELIMITER ;
 
--- Create Diagnosis Report Function
-
-
--- Create Treatment
-
--- ----------------------
-
 INSERT INTO `Test` (`name`, `cost`) VALUES
 ("Ultrasound Imaging", 500),
 ("MRI", 3000),
