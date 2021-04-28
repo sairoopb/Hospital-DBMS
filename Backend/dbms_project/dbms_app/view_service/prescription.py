@@ -11,9 +11,14 @@ def prescription_view(request,branch):
             if request.method == "POST":
                 new_pres_id = 0
 
+                p_type = 0
+                p_type_str = request.POST.get("p_type")
+                if p_type_str == "Treatment":
+                    p_type = 1
+                
                 params = [
                     request.POST.get("id"),
-                    request.POST.get("p_type"),
+                    p_type,
                     request.POST.get("med_id"),
                     request.POST.get("quantity"),
                     new_pres_id
