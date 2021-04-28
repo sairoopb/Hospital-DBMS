@@ -19,28 +19,35 @@ DELIMITER ;
 
 -- Check if the patient exists
 DELIMITER #
-CREATE OR REPLACE PROCEDURE patient_exists(IN pat_id int, IN contact_number varchar(15), OUT exist int)
+CREATE OR REPLACE PROCEDURE patient_exists(IN pat_id int, IN contact_number varchar(15), OUT exist varchar(10), OUT id int)
 BEGIN
-IF contact_number IS NOT NULL THEN
-    SELECT IF(COUNT(*) >0,1,0) INTO exist FROM `Patient` WHERE contact_no = contact_number;
-ELSE
-   SELECT IF(COUNT(*) >0,1,0) INTO exist FROM `Patient` WHERE patient_id = pat_id;
-END IF;
+  SET id = -1;
+  IF pat_id IS NOT NULL AND contact_number IS NOT NULL THEN
+    SELECT patient_id INTO id FROM `Patient` WHERE contact_no = contact_number;
+  ELSE
+    IF contact_number IS NULL THEN
+      SELECT patient_id INTO id FROM `Patient` WHERE patient_id = pat_id;
+    ELSE
+      SELECT patient_id INTO id FROM `Patient` WHERE contact_no = contact_number;
+    END IF;
+  END IF;
+  SELECT id;
+  SELECT IF(id <> -1, 1,0) INTO exist;
 END#
 DELIMITER ;
-
 -- Adding a new registration
 DELIMITER #
-CREATE OR REPLACE PROCEDURE new_registration(IN pat_id int,IN  f_name varchar(30), 
+CREATE OR REPLACE PROCEDURE new_registration(IN  f_name varchar(30), 
                                             IN l_name varchar(30), IN contact_number varchar(15),
-                                            IN addr varchar(100))
+                                            IN addr varchar(100),OUT new_id int)
 BEGIN
 DECLARE t int;
-CALL patient_exists(pat_id,contact_number,t);
+SET new_id = (SELECT COUNT(*) FROM Patient) + 1;
+CALL patient_exists(null,contact_number,t);
 IF t > 0 THEN
     SELECT "Already Registered";
 ELSE
-    INSERT INTO `Patient` VALUES (pat_id, f_name, l_name, contact_number, addr); 
+    INSERT INTO `Patient` VALUES (new_id, f_name, l_name, contact_number, addr); 
    
 END IF;
 END#
@@ -48,12 +55,19 @@ DELIMITER ;
 
 -- Patient Log entry check
 DELIMITER #
-CREATE OR REPLACE PROCEDURE checkin_out(IN pat_id int, IN val DATETIME, IN chkin int)
+CREATE OR REPLACE PROCEDURE checkin_out(IN pat_id int, IN val DATETIME, IN chkin int, OUT result int)
 BEGIN
-    IF chkin = 1 THEN
-        INSERT INTO `Patient_Log` VALUES (pat_id, val, NULL);
-    ELSE
-        UPDATE `Patient_Log` SET checkout = val WHERE patient_id = pat_id AND checkout IS NULL ;
+    SET result = 0;
+    SELECT result;
+    CALL patient_exists(pat_id,NULL,result,@temp);
+    SELECT result;
+    IF result = 1 THEN
+      SELECT "check";
+      IF chkin = 1 THEN
+          INSERT INTO `Patient_Log` VALUES (pat_id, val, NULL);
+      ELSE
+          UPDATE `Patient_Log` SET checkout = val WHERE patient_id = pat_id AND checkout IS NULL ;
+      END IF;
     END IF;
 END#
 DELIMITER ;
