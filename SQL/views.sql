@@ -66,9 +66,9 @@ Treatment ON T.treatment_id = Treatment.treatment_id;
 
 -- 6.
 CREATE OR REPLACE VIEW Bill_Report AS
-SELECT Bill.*, Test.name as `Tests`, Test.cost as `Test Cost`,`Procedure`.name as `Procedures`, `Procedure`.cost as `Procedure Cost`,
-Medicine.name as `drug`, Includes.unit as `Medicine Qt`, Medicine.price as `Medicine Unit Cost`, 
-Patient.patient_id, CONCAT(Patient.first_name, " ", Patient.last_name) as `Patient Name` 
+SELECT Bill.*, Test.name as `Tests`, Test.cost as `Test_Cost`,`Procedure`.name as `Procedures`, `Procedure`.cost as `Procedure_Cost`,
+Medicine.name as `drug`, Includes.unit as `Medicine_Qt`, Medicine.price as `Medicine_Unit_Cost`, 
+Patient.patient_id, CONCAT(Patient.first_name, " ", Patient.last_name) as `Patient_Name` 
 FROM Bill LEFT JOIN
 Pays ON Pays.bill_number = Bill.bill_number LEFT JOIN
 Patient ON Patient.patient_id = Pays.patient_id LEFT JOIN
@@ -87,3 +87,7 @@ CREATE OR REPLACE VIEW Prescription_Report AS
 SELECT Includes.prescription_id, Includes.unit, Medicine.name 
 FROM Includes LEFT JOIN 
 Medicine ON Includes.medicine_id = Medicine.medicine_id;
+
+CREATE OR REPLACE VIEW appointment_menu AS
+SELECT D.doctor_id, CONCAT(D.first_name, " ", D.last_name), D.specialization, A.date, A.start_time FROM 
+(Doctor AS D) JOIN (Appointment AS A) ON D.doctor_id = A.doctor_id ORDER BY D.first_name ASC, D.last_name ASC

@@ -1,0 +1,77 @@
+{% extends "dbms_app/layout.html" %}
+
+{% block title %}
+  Record New Treatment
+{% endblock %}
+
+{% block navlist %}
+
+  <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="retrieve">Retrieve Treatment Reports</a>
+          </li>
+	  <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="discharge">Discharge Patients</a>
+          </li>
+  </ul>
+
+{% endblock%}
+
+{% block body %}
+  <form method="POST">
+    {% csrf_token %}
+    
+    Patient ID:<br/>
+    <input type="number" name="pat_id" min="1" step="1" required><br/>
+
+    Doctor IDs( multiple IDs should be separated by pipe symbol - | ):<br/>
+    <input type="text" name="doc_ids" required><br/>
+
+    Treatment Room Number:<br/>
+    <input type="number" name="room" min="1" step="1" required><br/>
+
+    Procedure IDs ( multiple IDs should be separated by pipe symbol - | ):<br/>
+    <input type="text" name="proc_ids" required><br/>
+
+    Start Date:<br/>
+    <input type="date" name="st_date" required><br/>
+
+    End Date:<br/>
+    <input type="date" name="en_date" required><br/>
+
+    Treatment Remarks:<br/>
+    <input type="text" name="details" required><br/>
+
+    Relevant Diagnosis ID (optional)<br/>
+    <input type="text" name="diag_id" min="1" step="1"><br/>
+
+    Aftercare Details:<br/><br/>
+
+    Aftercare Room Number (Fill only if patient has been shifted to aftercare):<br/>
+    <input type="number" name="aftercare_room" min="1" step="1"><br/>
+
+    Aftercare Nurse ID:<br/>
+    <input type="number" name="aftercare_nurse" min="1" step="1"><br/>
+
+    <br/>
+    <input type="submit" value="Submit"><br/>
+    
+  </form>
+
+  <br/><br/>
+  {% for result in results %}
+      <p>{{result}}</p>
+  {% endfor %}
+
+  <br/>
+  {% for treat_id in treat_ids %}
+      <form action="retrieve" method="POST">
+	{% csrf_token %}
+	<input type="hidden" name="treat_id" value={{treat_id}}>
+	<input type="submit" value="View Report"/>
+      </form>
+  {% endfor %}
+
+  
+      
+{% endblock %}
