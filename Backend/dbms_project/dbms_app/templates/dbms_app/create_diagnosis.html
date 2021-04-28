@@ -34,7 +34,7 @@
     <input type="text" name="final_res" required><br/>
 
     <br/>
-    <input type="submit" value="Submit"><br/>
+    <input type="submit" value="Submit" class="btn btn-primary"><br/>
     
   </form>
 
@@ -48,7 +48,7 @@
       <form action="retrieve" method="POST">
 	{% csrf_token %}
 	<input type="hidden" name="diag_id" value={{diag_id}}>
-	<input type="submit" value="View Report"/>
+	<input type="submit" value="View Report" class="btn btn-primary">
       </form>
   {% endfor %}
 
