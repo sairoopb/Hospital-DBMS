@@ -52,7 +52,7 @@ CREATE OR REPLACE PROCEDURE new_registration(IN  f_name varchar(30),
 BEGIN
 DECLARE t int;
 SET new_id = (SELECT COUNT(*) FROM Patient) + 1;
-CALL patient_exists(null,contact_number,t);
+CALL patient_exists(null,contact_number,t,@temp);
 IF t > 0 THEN
     SELECT "Already Registered";
 ELSE
@@ -566,7 +566,7 @@ LEAVE proclabel;
 END IF;
 
 INSERT INTO Bill VALUES 
-(new_bill_id, 0, bill_subtotal*(1.05), bill_subtotal , bill_subtotal*0.05,0);
+(new_bill_id, 1, bill_subtotal*(1.05), bill_subtotal , bill_subtotal*0.05,0);
 
 INSERT INTO Medical_Bill VALUES
 (presc_id, new_bill_id);

@@ -28,7 +28,9 @@ def patient_registration(request):
             cursor.execute("SELECT @new_id")
             new_id = (cursor.fetchone())[0]
             return render(request,"dbms_app/patient_reg.html",{
-            "message": f"Registered Successfully with id={new_id}, Check in find patient"
+            "message": f"Registered Successfully",
+            "result":f"Registered Successfully with id={new_id}, Click below to view details",
+            "pat_ids":[new_id]
             })
         except Exception as e:
             print(e)
@@ -46,7 +48,7 @@ def find_patient(request):
                 contact_no = None
             if pat_id == "":
                 pat_id = None
-
+            print(contact_no, pat_id)
             args = [pat_id,contact_no,0,0]
             cursor.callproc("patient_exists",args)
             cursor.execute("SELECT @_patient_exists_2")

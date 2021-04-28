@@ -43,5 +43,15 @@
   <button type="submit" class="btn btn-primary">Submit</button>
   </form>
 
+  <p> {{result}} </p>
+
+  {% for pat_id in pat_ids %}
+      <form action="find_patient" method="POST">
+  {% csrf_token %}
+  <input type="hidden" name="patient_id" value={{pat_id}}>
+  <input type="hidden" name="contact_no" value="">
+  <button type="submit" class="btn btn-primary">More Details</button>
+      </form>
+  {% endfor %}
+
 {% endblock %}
-<!DOCTYPE html>
