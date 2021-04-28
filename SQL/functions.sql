@@ -1,10 +1,8 @@
 -- Create an appointment by the consultant 
 DELIMITER # 
-CREATE OR REPLACE FUNCTION create_appointment
-(doctor int, patient_id int, start_datetime datetime)
-RETURNS int
+CREATE OR REPLACE PROCEDURE create_appointment
+(IN doctor int, IN patient_id int, IN start_datetime datetime, OUT created int)
 BEGIN
-DECLARE created int;
 IF (SELECT start_time FROM Appointment 
     WHERE `date` = DATE(start_datetime) AND 
     doctor_id = doctor AND start_time 
@@ -16,7 +14,6 @@ ELSE
     (doctor, patient_id, DATE(start_datetime), TIME(start_datetime));
     SET created = 1;
 END IF;
-RETURN created;
 END#
 DELIMITER ;
 
