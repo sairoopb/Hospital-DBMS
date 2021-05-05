@@ -11,5 +11,6 @@ urlpatterns = [
     path("Prescriptions/<str:branch>",views.prescription_view,name = "prescriptions"),
     path("Treatments/<str:branch>",views.treatment_view,name = "treatments"),
     path("Login",views.login_view,name = "login"),
-    path("Signup",views.signup_view,name = "signup")
+    path("Signup",views.signup_view,name = "signup"),
+    path("Logout",views.logout_view, name="logout")
 ]
