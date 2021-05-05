@@ -11,3 +11,4 @@ hospital
 Backend/dbms_project/dbms_app/migrations/*
 Backend/dbms_project/dbms_app/migrations/*
 Backend/dbms_project/dbms_app/Utilities/__pycache__/*
+Backend/dbms_project/dbms_app/models.py

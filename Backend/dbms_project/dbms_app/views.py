@@ -49,3 +49,7 @@ def prescription_view(request,branch):
 @role_required([0])
 def signup_view(request):
     return signup_service.signup_view(request)
+
+def logout_view(request):
+    logout(request)
+    return HttpResponseRedirect(reverse("home"))
