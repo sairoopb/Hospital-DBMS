@@ -72,6 +72,23 @@
       </form>
   {% endfor %}
 
+
+{% for treat_id in treat_ids %}
+
+      <form method="POST">
+	{% csrf_token %}
+	<input type="hidden" name="del_treat_id" value = {{treat_id}}><br/>
+	<br/>
+	<input type="submit" value="Undo Treatment Creation" class="btn btn-primary">
+
+  {% endfor %}
+
+  {% for del_stat in del_status %}
+
+    <p> {{del_stat}} </p>
+	
+  {% endfor %}
   
+      
       
 {% endblock %}

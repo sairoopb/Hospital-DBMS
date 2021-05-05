@@ -21,6 +21,18 @@ def treatment_view(request,branch):
             result = None
 
             if request.method == 'POST':
+
+                del_treat_id = request.POST.get('del_treat_id')
+                if del_treat_id is not None:
+                    cursor.execute("DELETE FROM Treatment WHERE treatment_id=%s", [del_treat_id])
+                    return render(request, "dbms_app/create_treatment.html",
+                                  {
+                                      "results": [],
+                                      "treat_ids": [],
+                                      "del_status":["Deleted successfully"]
+                                  })
+
+                
                 pat_id = request.POST.get('pat_id')
                 doc_ids = request.POST.get('doc_ids')
                 room = request.POST.get('room')
