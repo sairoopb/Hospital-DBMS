@@ -10,5 +10,6 @@ urlpatterns = [
     path("Pharmacy/<str:branch>",views.pharmacy_view,name = "pharmacy"),
     path("Prescriptions/<str:branch>",views.prescription_view,name = "prescriptions"),
     path("Treatments/<str:branch>",views.treatment_view,name = "treatments"),
-    path("login",views.login_view,name = "login")
+    path("Login",views.login_view,name = "login"),
+    path("Signup",views.signup_view,name = "signup")
 ]
