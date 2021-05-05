@@ -9,6 +9,5 @@ Backend/dbms_project/dbms_app/__pycache__/*
 Backend/dbms_project/dbms_app/migrations/__pycache__/*
 hospital
 Backend/dbms_project/dbms_app/migrations/*
-Backend/dbms_project/dbms_app/migrations/*
-.gitignore
 Backend/dbms_project/dbms_app/models.py
+!Backend/dbms_project/dbms_app/migrations/__init__.py
