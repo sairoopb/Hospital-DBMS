@@ -1,7 +1,7 @@
 {% extends "dbms_app/layout.html" %}
 
 {% block title %}
-  Hospital
+  Log In
 {% endblock %}
 
 {%block navlist %}
@@ -13,20 +13,23 @@
 {% endblock%}
 
 {% block body %}
+  <h3 class = "my-4"> Log In </h3>
+  <div class="mt-4">
+      <form method="post">
+          {% csrf_token %}
+          <h2 class="text-center">Log in</h2>
+          <div class="mb-3">
+            <label for="username" class="form-label">Username:</label>
+            <input type="text" class="form-control" id="username" name="username">
+          </div>
+          <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" class="form-control" id="password" name="password">
+          </div>
+          <button type="submit" class="btn btn-primary">Login</button>
+      </form>
 
-  <form method="POST">
-    {% csrf_token %}
-
-    Username:<br/>
-    <input type="text" name="username" required><br/>
-
-    Password:<br/>
-    <input type="password" name="password" required><br/>
-
-    <br/>
-    <input type="submit" value="Submit" class="btn btn-primary"><br/>
-
-
+    </div>
     {% if message %}
 
       <p> {{message}} </p>
