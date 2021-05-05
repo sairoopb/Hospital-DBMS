@@ -1,8 +1,31 @@
 from django.shortcuts import render
 from .view_service import patient, appointment, treatment, diagnosis, prescription, pharma_bill, payments, Home
-
+# from ...utilities.decorators import student_required
 # Create your views here.
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate, login, logout
+from django.shortcuts import get_object_or_404, render
+from django.http import HttpResponse, HttpResponseRedirect
+from django.urls import reverse
 
+
+# @login_required
+def login_view(request):
+    if request.method == "POST":
+
+        username = request.POST["username"]
+        password = request.POST["password"]
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            login(request, user)
+            return HttpResponseRedirect(reverse("home"))
+        else:
+            return render(request, "dbms_app/login.html", {
+                "message": "Invalid username and/or password."
+            })
+    else:
+        return render(request, "dbms_app/login.html")
 
 def home_view(request):
     return Home.home_view(request)
