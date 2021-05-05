@@ -20,11 +20,8 @@ def payments_view(request,branch):
                         cursor.execute("SELECT * FROM Patient WHERE patient_id = %s", [request.POST['patient_id']])
                         if cursor.rowcount == 0:
                             return render(request, "dbms_app/payments.html",{"errorFlag" : True})
-                        if 'isPaid' in request.POST and request.POST['isPaid'] != "Paid":
-                            cursor.execute("SELECT * FROM Patient WHERE patient_id = %s AND paid = 1", [request.POST['patient_id']])
-                            if cursor.rowcount == 0:
-                                return render(request, "dbms_app/payments.html",{"errorFlag" : True})
-                            cursor.execute("SELECT * FROM Bill_Report WHERE patient_id = %s AND paid = 1 ORDER BY bill_number asc", [request.POST['patient_id']])
+                        if 'isPaid' in request.POST :
+                            cursor.execute("SELECT * FROM Bill_Report WHERE patient_id = %s AND paid = 0 ORDER BY bill_number asc", [request.POST['patient_id']])
                         else:
                             cursor.execute("SELECT * FROM Bill_Report WHERE patient_id = %s ORDER BY bill_number asc", [request.POST['patient_id']])
                     else:
