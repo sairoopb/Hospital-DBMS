@@ -8,5 +8,6 @@ Backend/dbms_project/dbms_app/view_service/__pycache__/*
 Backend/dbms_project/dbms_app/__pycache__/*
 Backend/dbms_project/dbms_app/migrations/__pycache__/*
 hospital
-Backend/dbms_project/dbms_app/models.py
 Backend/dbms_project/dbms_app/migrations/*
+Backend/dbms_project/dbms_app/migrations/*
+Backend/dbms_project/dbms_app/Utilities/__pycache__/*

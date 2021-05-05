@@ -13,6 +13,17 @@ def diagnosis_view(request, branch):
             final_res = None
             result = None
             if request.method == 'POST':
+
+                del_diag_id = request.POST.get('del_diag_id')
+                if del_diag_id is not None:
+                    cursor.execute("DELETE FROM Diagnosis WHERE diagnosis_id=%s", [del_diag_id])
+                    return render(request, "dbms_app/create_diagnosis.html",
+                                  {
+                                      "results": [],
+                                      "diag_ids": [],
+                                      "del_status":["Deleted successfully"]
+                                  })
+                
                 pat_id = request.POST.get('pat_id')
                 doc_id = request.POST.get('doc_id')
                 test_ids = request.POST.get('test_ids')

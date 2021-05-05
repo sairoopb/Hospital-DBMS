@@ -1,0 +1,36 @@
+{% extends "dbms_app/layout.html" %}
+
+{% block title %}
+  Hospital
+{% endblock %}
+
+{%block navlist %}
+  <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class = "nav-item">
+            <a class="nav-link" aria-current="page" href="{% url 'signup'%}">Signup</a>
+          </li>
+  </ul>
+{% endblock%}
+
+{% block body %}
+
+  <form method="POST">
+    {% csrf_token %}
+
+    Username:<br/>
+    <input type="text" name="username" required><br/>
+
+    Password:<br/>
+    <input type="password" name="password" required><br/>
+
+    <br/>
+    <input type="submit" value="Submit" class="btn btn-primary"><br/>
+
+
+    {% if message %}
+
+      <p> {{message}} </p>
+
+    {% endif %}
+
+{% endblock %}
