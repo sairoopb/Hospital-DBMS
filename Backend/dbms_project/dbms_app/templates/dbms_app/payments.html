@@ -2,18 +2,34 @@
 
 {% block title %}Bill Desk{% endblock %}
 
+{% block navlist %}
+
+<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+    <li class="nav-item">
+      <a class="nav-link" aria-current="page" href="{% url 'payments' 'pay' %}">Pay Bills</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="{% url 'payments' 'view' %}">View Bills</a>
+    </li>
+</ul>
+
+{% endblock %}
+
 {% block body %}
 {% if errorFlag %}
-There has been an Error in the bill processing i.e wrong bill number
+Unseen error please check inputs :(
 {% endif %}
 
 {% if createFlag %}
 Bill is succesfully paid.
 {% endif %}
 
-<form style="padding:42px 20px" action="payments">
+<form style="padding:42px 20px" method="POST">
+    {% csrf_token %}
     <label for="patient_id"> Patient ID </label><br>
     <input type="text" id="patient_id" name="patient_id"><br><br>
+    <label for="isPaid"> Paid </label><br>
+    <input type="radio" id="isPaid" name="isPaid" value="Paid"><br><br>
     <input type="submit" value="Submit">
 </form>
 
@@ -36,20 +52,9 @@ Enter the patient ID or click submit
             {% for value in data %}
             <tr style="cursor:pointer;">
                 <td>{{ value.bill_number }}</td>
-                <td>{{ value.bill_type }}</td>
-                <td>{{ value.total }}</td>
-                <td>{{ value.subtotal }}</td>
-                <td>{{ value.taxes }}</td>
-                <td>{{ value.paid }}</td>
-                <td>{{ value.Tests }}</td>
-                <td>{{ value.Test_Cost }}</td>
-                <td>{{ value.Procedures }}</td>
-                <td>{{ value.Procedure_Cost }}</td>
-                <td>{{ value.drug }}</td>
-                <td>{{ value.Medicine_Qt }}</td>
-                <td>{{ value.Medicine_Unit_Cost }}</td>
-                <td>{{ value.patient_id }}</td>
                 <td>{{ value.Patient_Name }}</td>
+                <td>{{ value.patient_id }}</td>
+                <td>{{ value.paid }}</td>
                 {% endfor %}
         </tbody>
 
@@ -57,7 +62,8 @@ Enter the patient ID or click submit
 </div>
 
 
-<form style="padding:42px 20px" action="payments">
+<form style="padding:42px 20px" method = "POST">
+    {% csrf_token %}
     <label for="bill_number"> Bill Number </label><br>
     <input type="text" id="bill_number" name="bill_number" required><br><br>
     <input type="submit" value="Pay">

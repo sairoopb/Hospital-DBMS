@@ -12,23 +12,72 @@ def dictfetchall(cursor):
     ]
 
 def payments_view(request,branch):
-    if request.method == "GET":
-        with connection.cursor() as cursor:
-            if 'bill_number' not in request.GET:
-                if 'patient_id' not in request.GET or request.GET['patient_id'] == "":
+    if branch == 'index' or branch == 'pay':
+        if request.method == "POST":
+            if 'bill_number' not in request.POST or request.POST['bill_number'] == "":
+                with connection.cursor() as cursor:
+                    if 'patient_id' in request.POST and request.POST['patient_id'] != "":
+                        cursor.execute("SELECT * FROM Patient WHERE patient_id = %s", [request.POST['patient_id']])
+                        if cursor.rowcount == 0:
+                            return render(request, "dbms_app/payments.html",{"errorFlag" : True})
+                        if 'isPaid' in request.POST and request.POST['isPaid'] != "Paid":
+                            cursor.execute("SELECT * FROM Patient WHERE patient_id = %s AND paid = 1", [request.POST['patient_id']])
+                            if cursor.rowcount == 0:
+                                return render(request, "dbms_app/payments.html",{"errorFlag" : True})
+                            cursor.execute("SELECT * FROM Bill_Report WHERE patient_id = %s AND paid = 1 ORDER BY bill_number asc", [request.POST['patient_id']])
+                        else:
+                            cursor.execute("SELECT * FROM Bill_Report WHERE patient_id = %s ORDER BY bill_number asc", [request.POST['patient_id']])
+                    else:
+                        cursor.execute("SELECT * FROM Bill_Report ORDER BY bill_number asc")
+                    columns = ["Bill Number", "Name", "Patient ID", "Bill Paid"]
+                    return render(request,"dbms_app/payments.html", {"headers": columns, "data":dictfetchall(cursor)})
+            elif 'bill_number' in request.POST and request.POST['bill_number'] != "":
+                with connection.cursor() as cursor:
+                    cursor.execute("SELECT * FROM Bill WHERE bill_number = %s", [request.POST['bill_id']])
+                    if cursor.rowcount == 0:
+                        return render(request, "dbms_app/payment.html",{"errorFlag" : True})
+                    cursor.callproc("mark_bill_paid", [request.POST['bill_number'], 0])
+                    cursor.execute("SELECT @_mark_bill_paid_1")
+                    if (cursor.fetchone()[0] == 0):
+                        cursor.execute("SELECT * FROM Bill_Report ORDER BY bill_number asc")
+                        columns = ["Bill Number", "Name", "Patient ID", "Bill Paid"]
+                        return render(request,"dbms_app/payments.html", {"headers": columns, "data":dictfetchall(cursor), "createFlag" : True})
                     cursor.execute("SELECT * FROM Bill_Report ORDER BY bill_number asc")
-                else:
-                    cursor.execute("SELECT * FROM Bill_Report WHERE patient_id = %s ORDER BY bill_number asc", [request.GET['patient_id']])
-                columns = [col[0] for col in cursor.description]
-                return render(request,"dbms_app/payments.html", {"headers": columns, "data":dictfetchall(cursor)})
+                    columns = ["Bill Number", "Name", "Patient ID", "Bill Paid"]
+                    return render(request,"dbms_app/payments.html", {"headers": columns, "data":dictfetchall(cursor), "errorFlag" : True})
             else:
-                cursor.callproc("mark_bill_paid", [request.GET['bill_number'], 0])
-                cursor.execute("SELECT @_mark_bill_paid_1")
-                if (cursor.fetchone()[0] == 0):
+                with connection.cursor() as cursor:
                     cursor.execute("SELECT * FROM Bill_Report ORDER BY bill_number asc")
-                    columns = [col[0] for col in cursor.description]
-                    return render(request,"dbms_app/payments.html", {"headers": columns, "data":dictfetchall(cursor), "createFlag" : True})
+                    columns = ["Bill Number", "Name", "Patient ID", "Bill Paid"]
+                    return render(request,"dbms_app/payments.html", {"headers": columns, "data":dictfetchall(cursor)})
+        else:
+            with connection.cursor() as cursor:
                 cursor.execute("SELECT * FROM Bill_Report ORDER BY bill_number asc")
-                columns = [col[0] for col in cursor.description]
-                return render(request,"dbms_app/payments.html", {"headers": columns, "data":dictfetchall(cursor), "errorFlag" : True})
+                columns = ["Bill Number", "Name", "Patient ID", "Bill Paid"]
+                return render(request,"dbms_app/payments.html", {"headers": columns, "data":dictfetchall(cursor)})
+            
+    else:
+        if request.method == "POST":
+            with connection.cursor() as cursor:
+                cursor.execute("SELECT * FROM Bill WHERE bill_number = %s", [request.POST['bill_id']])
+                if cursor.rowcount == 0:
+                    return render(request, "dbms_app/pay_bill.html",{"errorFlag" : False})
                 
+                cursor.execute("SELECT * FROM Bill WHERE bill_number = %s", [request.POST['bill_id']])
+                bill_details = cursor.fetchall()
+
+                cursor.execute("SELECT DISTINCT Tests, Test_Cost FROM Bill_Report WHERE bill_number = %s", [request.POST['bill_id']])
+                test_details = cursor.fetchall()
+
+                cursor.execute("SELECT DISTINCT Procedures,Procedure_Cost FROM Bill_Report WHERE bill_number = %s", [request.POST['bill_id']])
+                proc_details = cursor.fetchall()
+
+                cursor.execute("SELECT DISTINCT drug, Medicine_Qt, Medicine_Unit_Cost FROM Bill_Report WHERE bill_number = %s", [request.POST['bill_id']])
+                medicine_details = cursor.fetchall()
+                
+                cursor.execute("SELECT DISTINCT patient_id, Patient_Name FROM Bill_Report WHERE bill_number = %s", [request.POST['bill_id']])
+                patient_details = cursor.fetchall()
+
+                return render(request,"dbms_app/pay_bill.html", {"flag":True, "bill" : bill_details, "test" : test_details, "proc" : proc_details, "medicine" : medicine_details, "patient" : patient_details})
+        else:
+            return render(request,"dbms_app/pay_bill.html", {"flag" : False})
