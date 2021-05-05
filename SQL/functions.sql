@@ -13,7 +13,7 @@ ELSE
 IF EXISTS(SELECT * FROM Doctor WHERE doctor_id = doc_id) THEN
 IF EXISTS(SELECT * FROM Patient WHERE patient_id = pat_id) THEN
     INSERT INTO Appointment VALUES
-    (doctor, patient_id, DATE(start_datetime), TIME(start_datetime));
+    (doc_id, pat_id, DATE(start_datetime), TIME(start_datetime));
     SET created = 1;
 ELSE
 SET created = -1;

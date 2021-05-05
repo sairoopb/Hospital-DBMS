@@ -1,0 +1,42 @@
+{% extends "dbms_app/layout.html" %}
+
+{% block title %}Consultant Desk{% endblock %}
+
+{% block navlist %}
+
+<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+    <li class="nav-item">
+      <a class="nav-link" aria-current="page" href="{% url 'appointments' 'show' %}">Show Appointment</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="{% url 'appointments' 'create' %}">Create Appointment</a>
+    </li>
+</ul>
+
+{% endblock %}
+
+{% block body %}
+
+{% if errorFlag %}
+There is a date/time clash please choose another time.
+{% endif %}
+
+{% if error %}
+Unseen error please check inputs :(
+{% endif %}
+
+{% if createFlag %}
+Appointment is succesfully created.
+{% endif %}
+
+<form style="padding:42px 20px" method="POST">
+    {% csrf_token %}
+    <label for="d_id"> Doctor ID </label><br>
+    <input type="text" id="d_id" name="d_id" required><br>
+    <label for="patient_id"> Patient ID </label><br>
+    <input type="text" id="patient_id" name="patient_id" required><br>
+    <label for="bookDate">Appointment Date and Time</label><br>
+    <input type="datetime-local" id="bookDate" name="bookDate" required><br><br>
+    <input type="submit" value="Book">
+</form>
+{% endblock %}
