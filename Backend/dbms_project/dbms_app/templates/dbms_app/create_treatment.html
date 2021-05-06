@@ -58,6 +58,33 @@
     
   </form>
 
+  {% if procedures or del_status%}
+    {% for del_stat in del_status %}
+
+      <p> {{del_stat}} </p>
+
+    {% endfor %}
+    <div class="mt-3">
+        <table class="table table-responsive table-sm table-hover table-fixed">
+            <thead class="table-secondary">
+            <tr>
+                <th>Procedure ID</th>
+                <th>Procedure Name</th>
+            </tr>
+
+            </thead>
+            <tbody>
+            {% for proc in procedures %}
+                <tr style="cursor:pointer;">
+                <td>{{ proc.procedure_id }}</td>
+                <td>{{ proc.name }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+  {% endif %}
+
   <br/><br/>
   {% for result in results %}
       <p>{{result}}</p>

@@ -16,7 +16,8 @@ def prescription_view(request, branch):
                     cursor.execute("DELETE FROM Prescription WHERE prescription_id = %s", [del_presc_id])
                     return render(request, "dbms_app/create_prescription.html",
                                 {
-                                    "del_status": "Deleted Successfully"
+                                    "del_status": "Deleted Successfully",
+                                    "medicines": Medicine.objects.all()
                                 })
                 
                 new_pres_id = 0

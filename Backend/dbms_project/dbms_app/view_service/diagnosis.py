@@ -21,7 +21,8 @@ def diagnosis_view(request, branch):
                                   {
                                       "results": [],
                                       "diag_ids": [],
-                                      "del_status":["Deleted successfully"]
+                                      "del_status":["Deleted successfully"],
+                                      "tests": models.Test.objects.all()
                                   })
                 
                 pat_id = request.POST.get('pat_id')
@@ -54,7 +55,8 @@ def diagnosis_view(request, branch):
                 return render(request, "dbms_app/create_diagnosis.html",
                                   {
                                       "results": [],
-                                      "diag_ids": []
+                                      "diag_ids": [],
+                                      "tests": models.Test.objects.all()
                                   })
 
 
