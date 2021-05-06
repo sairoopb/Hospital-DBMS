@@ -9,9 +9,11 @@
           <li class = "nav-item">
             <a class="nav-link" aria-current="page" href="Login?next=/">Login</a>
           </li>
+          {% if user.user_type == 0 %}
           <li class = "nav-item">
             <a class="nav-link" aria-current="page" href="{% url 'signup'%}">Signup</a>
           </li>
+          {% endif %}
   </ul>
 {% endblock%}
 

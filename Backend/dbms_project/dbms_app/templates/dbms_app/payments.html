@@ -30,7 +30,7 @@ Bill is succesfully paid.
     <input type="text" id="patient_id" name="patient_id"><br><br>
     <label for="isPaid"> Unpaid : </label>
     <input type="radio" id="isPaid" name="isPaid" value="isPaid"><br><br>
-    <input type="submit" value="Submit">
+    <input type="submit" value="Submit" class="btn btn-primary">
 </form>
 
 {% if not data %}
@@ -66,6 +66,6 @@ Enter the patient ID or click submit
     {% csrf_token %}
     <label for="bill_number"> Bill Number </label><br>
     <input type="text" id="bill_number" name="bill_number" required><br><br>
-    <input type="submit" value="Pay">
+    <input type="submit" value="Pay" class="btn btn-primary">
 </form>
 {% endblock %}

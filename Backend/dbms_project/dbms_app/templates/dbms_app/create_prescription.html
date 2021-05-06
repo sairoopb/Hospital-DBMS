@@ -50,7 +50,7 @@
             <td><input type = "text" name = "quantity"></td>
         </tr>
     </table>
-    <input type = "submit" name = "submit">
+    <input type = "submit" name = "submit" class="btn btn-primary">
     
 </form>
 <br>
@@ -62,7 +62,7 @@
     <form action = "show" method="POST">
         {% csrf_token %}
         <input type = "hidden" name = "presc_id_create" value = {{ presc_id }}>
-        <input type = "submit" value = "See Prescription">
+        <input type = "submit" value = "See Prescription" class="btn btn-primary">
     </form>
 {% endif %}
 
