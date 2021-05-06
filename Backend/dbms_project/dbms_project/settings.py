@@ -28,6 +28,7 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 AUTH_USER_MODEL = 'dbms_app.User'
+LOGIN_URL = '/Login?next=/'
 # Application definition
 
 INSTALLED_APPS = [
