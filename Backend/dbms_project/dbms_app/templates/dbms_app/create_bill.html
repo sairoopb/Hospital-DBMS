@@ -27,7 +27,7 @@ Create Bill
     <form method="POST">
         {% csrf_token %}
         Prescription ID: <input type="number" name="presc_id" required>
-        <input type="submit" value="Search">
+        <input type="submit" value="Search" class="btn btn-primary">
     </form>
     <br>
 
@@ -68,7 +68,7 @@ Create Bill
         <form action="create" method="POST">
             {% csrf_token %}
             <input type="hidden" name="presc_id_bill" value={{ presc_id }}>
-            <input type="submit" value="Generate Bill">
+            <input type="submit" value="Generate Bill" class="btn btn-primary">
         </form>
         {% else %}
             {{ bill_result }}
@@ -78,7 +78,7 @@ Create Bill
                 <form action="show" method="POST">
                     {% csrf_token %}
                     <input type="hidden" name="bill_id_create" value={{ bill_id }}>
-                    <input type="submit" value="Show Bill">
+                    <input type="submit" value="Show Bill" class="btn btn-primary">
                 </form>
             {% endif %}
 
