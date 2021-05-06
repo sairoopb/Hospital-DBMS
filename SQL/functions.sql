@@ -13,7 +13,7 @@ ELSE
 IF EXISTS(SELECT * FROM Doctor WHERE doctor_id = doc_id) THEN
 IF EXISTS(SELECT * FROM Patient WHERE patient_id = pat_id) THEN
     INSERT INTO Appointment VALUES
-    (doctor, patient_id, DATE(start_datetime), TIME(start_datetime));
+    (doc_id, pat_id, DATE(start_datetime), TIME(start_datetime));
     SET created = 1;
 ELSE
 SET created = -1;
@@ -566,7 +566,7 @@ LEAVE proclabel;
 END IF;
 
 INSERT INTO Bill VALUES 
-(new_bill_id, 1, bill_subtotal*(1.05), bill_subtotal , bill_subtotal*0.05,0);
+(new_bill_id, 1, bill_subtotal*(1.05), bill_subtotal , bill_subtotal*0.05,1);
 
 INSERT INTO Medical_Bill VALUES
 (presc_id, new_bill_id);

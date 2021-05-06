@@ -1,0 +1,39 @@
+{% extends "dbms_app/layout.html" %}
+
+{% block title %}
+  Log In
+{% endblock %}
+
+{%block navlist %}
+  <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class = "nav-item">
+            <a class="nav-link" aria-current="page" href="{% url 'signup'%}">Signup</a>
+          </li>
+  </ul>
+{% endblock%}
+
+{% block body %}
+  <h3 class = "my-4"> Log In </h3>
+  <div class="mt-4">
+      <form method="post">
+          {% csrf_token %}
+          <h2 class="text-center">Log in</h2>
+          <div class="mb-3">
+            <label for="username" class="form-label">Username:</label>
+            <input type="text" class="form-control" id="username" name="username">
+          </div>
+          <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" class="form-control" id="password" name="password">
+          </div>
+          <button type="submit" class="btn btn-primary">Login</button>
+      </form>
+
+    </div>
+    {% if message %}
+
+      <p> {{message}} </p>
+
+    {% endif %}
+
+{% endblock %}

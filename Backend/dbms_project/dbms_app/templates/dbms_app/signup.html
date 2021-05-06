@@ -1,0 +1,35 @@
+{% extends "dbms_app/layout.html" %}
+
+{% block title %}
+  Signup
+{% endblock %}
+
+{%block navlist %}
+
+{% endblock%}
+
+{% block body %}
+
+  <form method="POST">
+    {% csrf_token %}
+
+    Username:<br/>
+    <input type="text" name="username" required><br/>
+
+    Password:<br/>
+    <input type="password" name="password" required><br/>
+
+    User Type:<br/>
+    <input type = "number" name="type" required min = '0' max = '5'> <br/>
+
+    <br/>
+    <input type="submit" value="Submit" class="btn btn-primary"><br/>
+
+
+    {% if message %}
+
+      <p> {{message}} </p>
+
+    {% endif %}
+
+{% endblock %}

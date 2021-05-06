@@ -52,6 +52,21 @@
       </form>
   {% endfor %}
 
+  {% for diag_id in diag_ids %}
+
+      <form method="POST">
+	{% csrf_token %}
+	<input type="hidden" name="del_diag_id" value = {{diag_id}}><br/>
+	<br/>
+	<input type="submit" value="Undo Diagnosis Creation" class="btn btn-primary">
+
+  {% endfor %}
+
+  {% for del_stat in del_status %}
+
+    <p> {{del_stat}} </p>
+	
+  {% endfor %}
   
       
 {% endblock %}

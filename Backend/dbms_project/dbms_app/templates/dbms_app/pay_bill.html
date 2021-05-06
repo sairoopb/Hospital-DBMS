@@ -1,0 +1,73 @@
+{% extends "dbms_app/layout.html" %}
+
+{% block title %}Bill Desk{% endblock %}
+
+{% block navlist %}
+
+<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+    <li class="nav-item">
+      <a class="nav-link" aria-current="page" href="{% url 'payments' 'pay' %}">Pay Bills</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="{% url 'payments' 'view' %}">view Bills</a>
+    </li>
+</ul>
+
+{% endblock %}
+
+{% block body %}
+{% if errorFlag %}
+An error occured please try again.
+{% endif %}
+
+<form style="padding:42px 20px" method="POST">
+    {% csrf_token %}
+    <label for="bill_id"> Bill Number </label><br>
+    <input type="text" id="bill_id" name="bill_id" required><br><br>
+    <input type="submit" value="Submit">
+</form>
+
+{% if not flag %}
+Enter the bill id.
+{% endif %}
+
+{% if flag %}
+<h1>Bill Report</h1>
+
+<h4>Bill Details</h4>
+{% for bill_number, bill_type, total, subtotal, taxes, paid in bill %}
+<strong>Bill Number : </strong> {{bill_number}} <br>
+<strong>Bill Type : </strong> {{bill_type}} <br>
+<strong>Total : </strong> {{total}} <br>
+<strong>Subtotal : </strong> {{subtotal}} <br>
+<strong>Taxes : </strong> {{taxes}} <br>
+<strong>Paid : </strong> {{paid}} <br><br>
+{% endfor %}
+
+<h4>Patient Details</h4>
+{% for id, name in patient %}
+<strong>ID : </strong> {{id}} <br>
+<strong>Name : </strong> {{name}} <br><br>
+{% endfor %}
+
+<h4>Test Details</h4>
+{% for testname, cost in test %}
+<strong>Test Name : </strong> {{testname}} <br>
+<strong>Cost : </strong> {{cost}} <br><br>
+{% endfor %}
+
+<h4>Procedure Details</h4>
+{% for procname, cost in proc %}
+<strong>Procedure Name : </strong> {{procname}} <br>
+<strong>Cost : </strong> {{cost}} <br><br>
+{% endfor %}
+
+<h4>Medicine Details</h4>
+{% for drug, quantity, unitcost in medicine %}
+<strong>Drug Name : </strong> {{drug}} <br>
+<strong>Quantity : </strong> {{quantity}} <br>
+<strong>Cost : </strong> {{unitcost}} <br><br>
+{% endfor %}
+{% endif %}
+
+{% endblock %}
