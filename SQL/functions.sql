@@ -1,11 +1,13 @@
--- Create an appointment by the consultant 
-DELIMITER # 
+-- Create an appointment by the consultant
+USE hospital;
+
+DELIMITER #
 CREATE OR REPLACE PROCEDURE create_appointment
 (IN doc_id int, IN pat_id int, IN start_datetime datetime, OUT created int)
 BEGIN
-IF (SELECT start_time FROM Appointment 
-    WHERE `date` = DATE(start_datetime) AND 
-    doctor_id = doc_id AND start_time 
+IF (SELECT start_time FROM Appointment
+    WHERE `date` = DATE(start_datetime) AND
+    doctor_id = doc_id AND start_time
     BETWEEN (SELECT subtime(TIME(start_datetime),'00:29:59'))
     AND (SELECT subtime(TIME(start_datetime),'-00:29:59')))
     THEN SET created = 0;
@@ -46,7 +48,7 @@ END#
 DELIMITER ;
 -- Adding a new registration
 DELIMITER #
-CREATE OR REPLACE PROCEDURE new_registration(IN  f_name varchar(30), 
+CREATE OR REPLACE PROCEDURE new_registration(IN  f_name varchar(30),
                                             IN l_name varchar(30), IN contact_number varchar(15),
                                             IN addr varchar(100),OUT new_id int)
 BEGIN
@@ -56,8 +58,8 @@ CALL patient_exists(null,contact_number,t,@temp);
 IF t > 0 THEN
     SELECT "Already Registered";
 ELSE
-    INSERT INTO `Patient` VALUES (new_id, f_name, l_name, contact_number, addr); 
-   
+    INSERT INTO `Patient` VALUES (new_id, f_name, l_name, contact_number, addr);
+
 END IF;
 END#
 DELIMITER ;
@@ -143,7 +145,7 @@ SET new_bill_id = 1;
 END IF;
 
 INSERT INTO Diagnosis
-VALUES (new_diag_id, final_result); 
+VALUES (new_diag_id, final_result);
 
 IF EXISTS(SELECT * FROM Patient WHERE patient_id = pat_id) THEN
 INSERT INTO Undergoes VALUES
@@ -199,7 +201,7 @@ END IF;
 END LOOP loop_label;
 
 
-INSERT INTO Bill VALUES 
+INSERT INTO Bill VALUES
 (new_bill_id, 0, bill_subtotal*(1.05), bill_subtotal , bill_subtotal*0.05,0);
 
 INSERT INTO Bill_Diag VALUES
@@ -445,7 +447,7 @@ SET new_presc_id = 1;
 END IF;
 
 INSERT INTO Prescription
-VALUES (new_presc_id); 
+VALUES (new_presc_id);
 
 IF presc_type = 0 THEN
 IF EXISTS(SELECT * FROM Diagnosis WHERE diagnosis_id = entity_id) THEN
@@ -565,7 +567,7 @@ CALL non_existent_procedure;
 LEAVE proclabel;
 END IF;
 
-INSERT INTO Bill VALUES 
+INSERT INTO Bill VALUES
 (new_bill_id, 1, bill_subtotal*(1.05), bill_subtotal , bill_subtotal*0.05,1);
 
 INSERT INTO Medical_Bill VALUES

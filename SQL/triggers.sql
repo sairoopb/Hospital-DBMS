@@ -1,3 +1,5 @@
+USE hospital;
+
 DELIMITER //
 CREATE OR REPLACE TRIGGER diagnosis_presc_bill_delete BEFORE DELETE ON Diagnosis
 FOR EACH ROW
