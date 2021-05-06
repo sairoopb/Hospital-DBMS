@@ -1,0 +1,154 @@
+Log in as frontdesk
+
+
+1. Patient Registration:
+    Find Patient (Exist check):
+    Contact Number: 9010331010
+
+    First Name : Sanjeev
+    Last Name: Kulkarni
+    Contact Number: 9010331010
+    Address : Kulkarni Building, Tark road, Nasik, Maharashtra
+
+---------------------------------------------------------------------------------------------------
+
+2. Checkin Patient:
+    Patient_id : 4
+    Checkin
+    Date:
+    2021 05 01 12 00 00
+
+    SQL COMMAND :  SELECT * FROM `Patient_Log`;
+
+----------------------------------------------------------------------------------------------------
+Logout frontdesk
+Login consultant
+
+3. Appointment:
+    Sort by specialization:  Neuro surgeon
+    Create Appointment:
+      Doctor id : 1
+      Patient id : 4
+      Appointment Date and Time: 2021-05-01 13:00:00
+
+    SQL COMMAND : SELECT * FROM Appointment;
+
+---------------------------------------------------------------------------------------------------
+Logout consultant
+Login doctor
+
+4.Diagnosis:
+  (* Consideration: Doctor create report after all tests done *)
+    Paitent Id: 4
+    Doctor Id: 1
+    Test Ids: 2|3
+    Test Results: Success, brain aneurysm suspected | brain aneurysm confirmed
+    Final Result of Diagnosis: brain aneurysm detected, Need Angiogram and ACL Reconstruction
+
+    Click on show report to show a complete report of diagnosis.
+
+    (Optional:
+          SQl command: SELECT * FROM `Diagnosis`
+          Go back, And click undo
+          repeat the above SQL command
+    )
+
+----------------------------------------------------------------------------------------------------
+
+5. Create Diagnosis Prescription:
+    Prescription Type : Diagnosis
+    Diagnosis Id: 4
+    Medicine(s) : 2|3              (* Cisplatin | Oxaplating *)
+    Quantity: 1|4.5
+
+    (Click on see prescription to show prescription report)
+    Show Prescription:
+    Prescription Id: 6
+
+  SQL COMMAND: SELECT * FROM `Prescription`;
+
+------------------------------------------------------------------------------------------------------
+logout from doctor
+login as pharmacist
+6. Take Prescription From Pharmacy:
+    Create Bill:
+      Prescription Id: 6
+
+    Show Bill:
+      Bill Id: 8
+-------------------------------------------------------------------------------------------------------
+12. Bill Payment:
+      Find Patient Bills:
+        Patient Id: 4
+
+        Enter Bill number(unpaid Bills to pay it): 7 (Diagnosis Bill)
+
+      Show Bills:
+        Bill Number : 7
+------------------------------------------------------------------------------------------------------
+Now the treatment is recommended to patient and patient leaves until treatment date.
+7. Patient Check Out:
+    Patient_id : 4
+    Checkout
+    Date:
+    2021 05 02 00 00 00
+
+  SQL COMMAND :  SELECT * FROM `Patient_Log`;
+
+------------------------------------------------------------------------------------------------------
+Patient Return For treatment
+
+8. Check Patient Exist:
+      Contact Number: 9010331010
+
+   Checkin Patient:
+      Patient_id : 4
+      Checkin
+      Date:
+      2021 05 04 10 00 00
+
+      SQL COMMAND :  SELECT * FROM `Patient_Log`;
+
+---------------------------------------------------------------------------------------------------------
+
+9. Treatment :
+    Patient Id: 4
+    Doctor Ids: 1|3|5
+    Treatment Room Number: 1
+    Procedure Ids: 1|5       (Angiogram | ACL Reconstruction)
+    Start Date: 04/05/2021
+    End Date: 04/05/2021
+    Treatment Remarks: Success with minor complications
+    Relevant Diagnosis Id:4
+    Aftercare Room Number: 3
+    Aftercare Nurse Id: 1             (Maheshwari)
+
+    Retrieve Treatment:
+      Treatment Id: 3
+
+-------------------------------------------------------------------------------------------------------
+
+10. Treatment Prescription:
+    Prescription Type: Treatment
+    Id: 3
+    Medicine(s) : 1|4
+    Quantity : 2.5|1.5
+
+    Show Prescription:
+      Prescription Id: 7
+
+----------------------------------------------------------------------------------------------------
+
+11. Discharge Patient:
+    Patient id:4
+
+----------------------------------------------------------------------------------------------------
+
+12. Bill Payment:
+      Find Patient Bills:
+        Patient Id: 4
+
+        Enter Bill number(unpaid Bills to pay it): 7 (Diagnosis Bill)
+
+      Show Bills:
+        Bill Number : 9 (Treatment Bill)

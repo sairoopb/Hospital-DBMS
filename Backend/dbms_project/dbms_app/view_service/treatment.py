@@ -29,7 +29,8 @@ def treatment_view(request,branch):
                                   {
                                       "results": [],
                                       "treat_ids": [],
-                                      "del_status":["Deleted successfully"]
+                                      "del_status":["Deleted successfully"],
+                                      "procedures":models.Procedure.objects.all()
                                   })
 
                 
@@ -44,6 +45,7 @@ def treatment_view(request,branch):
                 if(not aft_room): aft_room = -1
                 aft_nurse = request.POST.get('aftercare_nurse')
                 if(not aft_nurse): aft_nurse = -1
+                diag_id = request.POST.get('diag_id')
                 if(not diag_id):  diag_id = -1
 
                 args = [pat_id, doc_ids, room, diag_id, proc_ids, st_date, en_date, details, aft_room, aft_nurse, new_tr_id]
@@ -70,7 +72,9 @@ def treatment_view(request,branch):
                 return render(request, "dbms_app/create_treatment.html",
                                   {
                                       "results": [],
-                                      "treat_ids": []
+                                      "treat_ids": [],
+                                      "procedures":models.Procedure.objects.all()
+
                                   })
 
 
