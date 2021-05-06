@@ -29,7 +29,8 @@ def treatment_view(request,branch):
                                   {
                                       "results": [],
                                       "treat_ids": [],
-                                      "del_status":["Deleted successfully"]
+                                      "del_status":["Deleted successfully"],
+                                      "procedures":models.Procedure.objects.all()
                                   })
 
                 
@@ -70,7 +71,9 @@ def treatment_view(request,branch):
                 return render(request, "dbms_app/create_treatment.html",
                                   {
                                       "results": [],
-                                      "treat_ids": []
+                                      "treat_ids": [],
+                                      "procedures":models.Procedure.objects.all()
+
                                   })
 
 

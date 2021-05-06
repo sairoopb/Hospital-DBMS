@@ -56,7 +56,10 @@
 <br>
     *multiple entries are to be seperated by '|'
 <br>
-    {% if medicines %}
+    {% if medicines or del_status %}
+        {% if del_status %}
+            {{ del_status}}
+        {% endif %}
     <div class="mt-3">
         <table class="table table-responsive table-sm table-hover table-fixed">
             <thead class="table-secondary">
@@ -99,9 +102,7 @@
     </form>
 {% endif %}
 
-{% if del_status %}
-    {{ del_status}}
-{% endif %}
+
 
 {% endblock %}  
 
