@@ -35,28 +35,53 @@
         </tr>
 
         <tr>        
-            <td> ID:</td> 
+            <td> Diagnosis/Prescription ID:</td> 
             <td> <input type = "number" name = "id" required> </td>
         </tr>
         
 
         <tr>        
-            <td>Medicine(s):</td> 
+            <td>Medicine ID(s):</td> 
             <td><input type = "text" name ="med_id" required></td>
         </tr>
 
         <tr>        
-            <td>Quantity:</td> 
+            <td>Quantity (packets):</td> 
             <td><input type = "text" name = "quantity"></td>
         </tr>
     </table>
-    <input type = "submit" name = "submit" class="btn btn-primary">
+    <input type = "submit" value ="Create" name = "submit" class="btn btn-primary">
     
 </form>
+<br>
+    *multiple entries are to be seperated by '|'
+<br>
+    {% if medicines %}
+    <div class="mt-3">
+        <table class="table table-responsive table-sm table-hover table-fixed">
+            <thead class="table-secondary">
+            <tr>
+                <th>Medicine ID</th>
+                <th>Medicine Name</th>
+            </tr>
+
+            </thead>
+            <tbody>
+            {% for med in medicines %}
+                <tr style="cursor:pointer;">
+                <td>{{ med.medicine_id }}</td>
+                <td>{{ med.name }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% endif %}
 <br>
 {% if result %}
     {{ result }}
 {% endif %}
+<br>
 <br>
 {% if presc_id %}
     <form action = "show" method="POST">
@@ -64,8 +89,19 @@
         <input type = "hidden" name = "presc_id_create" value = {{ presc_id }}>
         <input type = "submit" value = "See Prescription" class="btn btn-primary">
     </form>
+
+    <br>
+
+    <form method="POST">
+        {% csrf_token %}
+        <input type = "hidden" name = "del_presc_id" value = {{ presc_id }}>
+        <input type = "submit" value = "Undo Prescription" class="btn btn-primary">
+    </form>
 {% endif %}
 
+{% if del_status %}
+    {{ del_status}}
+{% endif %}
 
 {% endblock %}  
 
