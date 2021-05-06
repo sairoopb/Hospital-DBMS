@@ -39,6 +39,34 @@
   </form>
 
   <br/><br/>
+
+  {% if tests or del_status%}
+    {% for del_stat in del_status %}
+
+      <p> {{del_stat}} </p>
+
+    {% endfor %}
+    <div class="mt-3">
+        <table class="table table-responsive table-sm table-hover table-fixed">
+            <thead class="table-secondary">
+            <tr>
+                <th>Test ID</th>
+                <th>Test Name</th>
+            </tr>
+
+            </thead>
+            <tbody>
+            {% for test in tests %}
+                <tr style="cursor:pointer;">
+                <td>{{ test.test_id }}</td>
+                <td>{{ test.name }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+  {% endif %}
+
   {% for result in results %}
       <p>{{result}}</p>
   {% endfor %}
@@ -62,11 +90,11 @@
 
   {% endfor %}
 
-  {% for del_stat in del_status %}
+  <!-- {% for del_stat in del_status %}
 
     <p> {{del_stat}} </p>
 	
-  {% endfor %}
+  {% endfor %} -->
   
       
 {% endblock %}
