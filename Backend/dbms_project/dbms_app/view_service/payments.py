@@ -21,11 +21,15 @@ def payments_view(request,branch):
                         if cursor.rowcount == 0:
                             return render(request, "dbms_app/payments.html",{"errorFlag" : True})
                         if 'isPaid' in request.POST :
-                            cursor.execute("SELECT * FROM Bill_Report WHERE patient_id = %s AND paid = 0 ORDER BY bill_number asc", [request.POST['patient_id']])
+                            cursor.execute("SELECT DISTINCT bill_number, Patient_name, patient_id, paid FROM Bill_Report WHERE patient_id = %s AND paid = 0 ORDER BY bill_number asc", [request.POST['patient_id']])
                         else:
-                            cursor.execute("SELECT * FROM Bill_Report WHERE patient_id = %s ORDER BY bill_number asc", [request.POST['patient_id']])
+                            cursor.execute("SELECT DISTINCT bill_number, Patient_name, patient_id, paid FROM Bill_Report WHERE patient_id = %s ORDER BY bill_number asc", [request.POST['patient_id']])
                     else:
-                        cursor.execute("SELECT * FROM Bill_Report ORDER BY bill_number asc")
+                        if 'isPaid' in request.POST :
+                            cursor.execute("SELECT DISTINCT bill_number, Patient_name, patient_id, paid FROM Bill_Report WHERE paid = 0 ORDER BY bill_number asc")
+                        else:
+                            cursor.execute("SELECT DISTINCT bill_number, Patient_name, patient_id, paid FROM Bill_Report ORDER BY bill_number asc")
+
                     columns = ["Bill Number", "Name", "Patient ID", "Bill Paid"]
                     return render(request,"dbms_app/payments.html", {"headers": columns, "data":dictfetchall(cursor)})
             elif 'bill_number' in request.POST and request.POST['bill_number'] != "":
