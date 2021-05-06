@@ -13,7 +13,7 @@ def prescription_view(request, branch):
 
                 if 'del_presc_id' in request.POST:
                     del_presc_id = request.POST.get("del_presc_id")
-                    cursor.execute("DELETE FROM Prescription WHERE prescription_id = %s", del_presc_id)
+                    cursor.execute("DELETE FROM Prescription WHERE prescription_id = %s", [del_presc_id])
                     return render(request, "dbms_app/create_prescription.html",
                                 {
                                     "del_status": "Deleted Successfully"
@@ -80,7 +80,7 @@ def prescription_view(request, branch):
 
                 result = cursor.fetchall()
                 cursor.close()
-                
+
                 if not result:
                     return render(request, "dbms_app/show_prescription.html", {
                         "message": "No prescription with ID " + str(presc_id),
