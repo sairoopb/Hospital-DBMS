@@ -34,16 +34,16 @@ def payments_view(request,branch):
                     return render(request,"dbms_app/payments.html", {"headers": columns, "data":dictfetchall(cursor)})
             elif 'bill_number' in request.POST and request.POST['bill_number'] != "":
                 with connection.cursor() as cursor:
-                    cursor.execute("SELECT * FROM Bill WHERE bill_number = %s", [request.POST['bill_id']])
+                    cursor.execute("SELECT * FROM Bill WHERE bill_number = %s", [request.POST['bill_number']])
                     if cursor.rowcount == 0:
                         return render(request, "dbms_app/payment.html",{"errorFlag" : True})
                     cursor.callproc("mark_bill_paid", [request.POST['bill_number'], 0])
                     cursor.execute("SELECT @_mark_bill_paid_1")
                     if (cursor.fetchone()[0] == 0):
-                        cursor.execute("SELECT * FROM Bill_Report ORDER BY bill_number asc")
+                        cursor.execute("SELECT DISTINCT bill_number, Patient_name, patient_id, paid FROM Bill_Report ORDER BY bill_number asc")
                         columns = ["Bill Number", "Name", "Patient ID", "Bill Paid"]
                         return render(request,"dbms_app/payments.html", {"headers": columns, "data":dictfetchall(cursor), "createFlag" : True})
-                    cursor.execute("SELECT * FROM Bill_Report ORDER BY bill_number asc")
+                    cursor.execute("SELECT DISTINCT bill_number, Patient_name, patient_id, paid FROM Bill_Report ORDER BY bill_number asc")
                     columns = ["Bill Number", "Name", "Patient ID", "Bill Paid"]
                     return render(request,"dbms_app/payments.html", {"headers": columns, "data":dictfetchall(cursor), "errorFlag" : True})
             else:
@@ -53,7 +53,7 @@ def payments_view(request,branch):
                     return render(request,"dbms_app/payments.html", {"headers": columns, "data":dictfetchall(cursor)})
         else:
             with connection.cursor() as cursor:
-                cursor.execute("SELECT * FROM Bill_Report ORDER BY bill_number asc")
+                cursor.execute("SELECT DISTINCT bill_number, Patient_name, patient_id, paid FROM Bill_Report ORDER BY bill_number asc")
                 columns = ["Bill Number", "Name", "Patient ID", "Bill Paid"]
                 return render(request,"dbms_app/payments.html", {"headers": columns, "data":dictfetchall(cursor)})
             
